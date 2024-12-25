@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, g
 import smtplib
 from email.mime.text import MIMEText
 from datetime import datetime
+import os
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key-here'  # Required for flashing messages
@@ -136,7 +137,7 @@ def join_us():
             'description': 'Seeking talented video editor for our media production team.',
             'requirements': ['Adobe Premiere Pro', 'After Effects', 'Creative storytelling'],
             'location': 'Remote'
-        },
+        }
         # Add more job listings as needed
     ]
     return render_template('join_us.html', active_page='join_us', jobs=job_listings)
