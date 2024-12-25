@@ -130,7 +130,7 @@ def join_us():
             'description': 'Looking for an experienced digital marketing professional.',
             'requirements': ['3+ years experience', 'Social media expertise', 'Content creation skills'],
             'location': 'Mumbai, India'
-        },
+        }
         {
             'title': 'Video Editor',
             'description': 'Seeking talented video editor for our media production team.',
@@ -142,4 +142,5 @@ def join_us():
     return render_template('join_us.html', active_page='join_us', jobs=job_listings)
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host = '0.0.0.0",port=port)
