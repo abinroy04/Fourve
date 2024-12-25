@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+/*{% extends "base.html" %}
 
 {% block title %}Fourve Studio{% endblock %}
 
@@ -41,3 +41,16 @@
     </div>
 </section>
 {% endblock %}
+*/
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Welcome to the Home Page</h1>
+    <img src="{{ url_for('static', filename='images/team/CEO_founder.jpeg') }}" alt="CEO">
+</body>
+</html>
