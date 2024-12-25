@@ -16,7 +16,8 @@ def add_now():
 def home():
     #now = datetime.now()
     #return render_template('home.html', active_page='home', now=now)
-    return '<h1>Hello World!</h1>'
+    return render_template('home.html')
+
 
     
 @app.route('/team')
