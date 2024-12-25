@@ -89,6 +89,25 @@ def digimark():
 def eventmgmt():
     return render_template('eventmgmt.html', active_page='eventmgmt')
 
+@app.route('/join-us')
+def join_us():
+    job_listings = [
+        {
+            'title': 'Digital Marketing Specialist',
+            'description': 'Looking for an experienced digital marketing professional.',
+            'requirements': ['3+ years experience', 'Social media expertise', 'Content creation skills'],
+            'location': 'Mumbai, India'
+        }
+        {
+            'title': 'Video Editor',
+            'description': 'Seeking talented video editor for our media production team.',
+            'requirements': ['Adobe Premiere Pro', 'After Effects', 'Creative storytelling'],
+            'location': 'Remote'
+        }
+        # Add more job listings as needed
+    ]
+    return render_template('join_us.html', active_page='join_us', jobs=job_listings)
+
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
@@ -123,24 +142,6 @@ def contact():
     
     return render_template('contact.html', active_page='contact')
 
-@app.route('/join-us')
-def join_us():
-    job_listings = [
-        {
-            'title': 'Digital Marketing Specialist',
-            'description': 'Looking for an experienced digital marketing professional.',
-            'requirements': ['3+ years experience', 'Social media expertise', 'Content creation skills'],
-            'location': 'Mumbai, India'
-        }
-        {
-            'title': 'Video Editor',
-            'description': 'Seeking talented video editor for our media production team.',
-            'requirements': ['Adobe Premiere Pro', 'After Effects', 'Creative storytelling'],
-            'location': 'Remote'
-        }
-        # Add more job listings as needed
-    ]
-    return render_template('join_us.html', active_page='join_us', jobs=job_listings)
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
