@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Fourve Studio{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <h1>We are a digital services company dedicated to providing services across India.</h1>
+        <p>Transforming ideas into digital excellence</p>
+        <a href="{{ url_for('contact') }}" class="cta-button">Get Started</a>
+    </div>
+</section>
+
+<section class="services-overview">
+    <h2 style="text-align: center; margin-bottom: 2rem;">Our Services</h2>
+    <div class="services-grid">
+        <div class="service-box">
+            <img src="{{ url_for('static', filename='images/live.jpg') }}" alt="Live Streaming">
+            <h3>Live Streaming</h3>
+            <p>Professional streaming services for your important events.</p>
+            <a href="{{ url_for('broadcasting') }}#live-streaming" class="learn-more">Learn More</a>
+        </div>
+        <div class="service-box">
+            <img src="{{ url_for('static', filename='images/media.jpg') }}" alt="Media Production">
+            <h3>Media Production</h3>
+            <p>High-quality videography and photography services.</p>
+            <a href="{{ url_for('mediapro') }}#media-production" class="learn-more">Learn More</a>
+        </div>
+        <div class="service-box">
+            <img src="{{ url_for('static', filename='images/digital.jpg') }}" alt="Digital Marketing">
+            <h3>Digital Marketing</h3>
+            <p>Comprehensive digital marketing solutions.</p>
+            <a href="{{ url_for('digimark') }}#digital-marketing" class="learn-more">Learn More</a>
+        </div>
+        <div class="service-box">
+            <img src="{{ url_for('static', filename='images/event.jpg') }}" alt="Event Management">
+            <h3>Event Management</h3>
+            <p>End-to-end event planning and execution.</p>
+            <a href="{{ url_for('eventmgmt') }}#event-management" class="learn-more">Learn More</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

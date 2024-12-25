@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Fourve Studio - Team{% endblock %}
+
+{% block extra_css %}
+<style>
+    .team {
+        padding-top: 2rem;
+    }
+
+    .team-members {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 2rem;
+        justify-content: center;
+        padding: 2rem;
+    }
+
+    .team-member {
+        flex-basis: 300px;
+        text-align: center;
+    }
+
+    .team-member img {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    
+    .team-member {
+        transition: all 0.3s ease;
+        padding: 1rem;
+        border-radius: 5px;
+    }
+
+    .team-member:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgb(85, 30, 236);
+        background-color: #f8f8f8;
+    }
+
+    .team-member img {
+        transition: all 0.3s ease;
+    }
+
+    .team-member:hover img {
+        transform: scale(1.15);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="team">
+    <h1 style="text-align: center; margin-bottom: 2rem;">Meet Our Team</h1>
+    <div class="team-members">
+        {% for member in team_members %}
+        <div class="team-member">
+            <img src="{{ url_for('static', filename=member.image) }}" alt="{{ member.name }}">
+            <h2>{{ member.name }}</h2>
+            <p>{{ member.position }}</p>
+            <p>{{ member.description }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
