@@ -14,9 +14,10 @@ def add_now():
 
 @app.route('/')
 def home():
-    now = datetime.now()
-    return render_template('home.html', active_page='home', now=now)
-
+    #now = datetime.now()
+    #return render_template('home.html', active_page='home', now=now)
+    return "HEllo World"
+    
 @app.route('/team')
 def team():
     team_members = [
