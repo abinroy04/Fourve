@@ -106,6 +106,12 @@ def contact():
 
     return render_template('contact.html', active_page='contact')
 
+@app.route('/test_env', methods=['GET'])
+def test_env():
+    email_id = os.environ.get('EMAIL_ID', 'Not Set')
+    app_password = os.environ.get('APP_PASSWORD', 'Not Set')
+    return f"EMAIL_ID: {email_id}, APP_PASSWORD: {app_password}"
+
 
 @app.route('/join-us')
 def join_us():
