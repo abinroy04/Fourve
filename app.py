@@ -46,32 +46,6 @@ def team():
     ]
     return render_template('team.html', active_page='team', team_members=team_members)
 
-@app.route('/services')
-def services():
-    services_list = {
-        'live_streaming': {
-            'title': 'Live Streaming',
-            'description': 'Professional streaming services for events across India.',
-            'features': ['High-quality streaming', 'Multiple platform support', 'Real-time engagement']
-        },
-        'media_production': {
-            'title': 'Media Production',
-            'description': 'Complete media production services for all your needs.',
-            'features': ['Video production', 'Photography', 'Post-production']
-        },
-        'digital_marketing': {
-            'title': 'Digital Marketing',
-            'description': 'Comprehensive digital marketing solutions.',
-            'features': ['Social media management', 'Content creation', 'SEO optimization']
-        },
-        'event_management': {
-            'title': 'Event Management',
-            'description': 'Full-service event planning and execution.',
-            'features': ['Wedding planning', 'Corporate events', 'Social gatherings']
-        }
-    }
-    return render_template('services.html', active_page='services', services=services_list)
-
 @app.route('/broadcasting')
 def broadcasting():
     return render_template('broadcasting.html', active_page='broadcasting')
