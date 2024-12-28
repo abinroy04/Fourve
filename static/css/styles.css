@@ -35,6 +35,25 @@ a:hover {
     color: var(--secondary-color);
 }
 
+
+/*Header buttons styles*/
+
+    .nav-links a {
+        color: var(--secondary-color);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        padding: 0.5rem 1rem;
+    }
+
+    .nav-links a:hover {
+        color: var(--primary-color);
+    }
+
+    .nav-links .active {
+        color: #ffffff;
+        border-bottom: 2px solid var(--primary-color);
+    }
+
 /* Apply global text colors */
 h1, h2, h3, h4, h5, h6, p {
     color: var(--text-color);
@@ -54,6 +73,7 @@ button {
     cursor: pointer;
     border: none;
     outline: none;
+    background-color: var(--secondary-color);
 }
 
 /* Header Styles */
@@ -78,6 +98,9 @@ header {
 /* Navigation Styles */
 .main-nav {
     padding: 1rem;
+    flex: 1;
+    display: flex;
+    justify-content: center;
 }
 
 .nav-links {
@@ -85,6 +108,8 @@ header {
     justify-content: center;
     list-style: none;
     gap: 2rem;
+    padding: 0;
+    margin: 0;
 }
 
 .nav-links a {
@@ -93,10 +118,14 @@ header {
     font-weight: 500;
     padding: 0.5rem 1rem;
     transition: color 0.3s;
+
 }
 
 .nav-links a:hover {
     color: var(--secondary-color);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
 }
 
 .nav-links a.active {
@@ -110,34 +139,42 @@ header {
 }
 
 .dropdown-content {
-    background: #000000;
     display: none;
     position: absolute;
-    min-width: 200px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    border-radius: 4px;
-    z-index: 1;
+    width: 200px;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(80px);
+    -webkit-backdrop-filter: blur(80px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 0.5rem 0;
+    z-index: 1000;
 }
 
-.services-dropdown:hover .dropdown-content {
-    display: block;
+.dropdown-content li {
+    list-style: none;
 }
 
 .dropdown-content a {
+    color: var(--text-color);
+    padding: 0.75rem 1.5rem;
     display: block;
-    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.dropdown-content a:hover {
+    background: rgba(99, 1, 1, 0.507);
+    transform: translateX(10px);
 }
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.9)),
-                url('../images/hero-bg.jpg');
+    background: linear-gradient(rgb(65, 105, 225, 0.8), rgba(0, 0, 0, 0.8));
     background-size: cover;
     background-position: center;
     color: white;
     text-align: center;
-    padding: 8rem 2rem;
-    margin-top: 80px;
+    padding: 6rem 2rem;
 }
 
 .hero h1 {
@@ -146,6 +183,12 @@ header {
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.hero .cta-button {
+    margin-top: 2rem;
+    display: inline-block;
+    background-color: rgb(65, 105, 225, 0.8);
 }
 
 /* Services Grid */
@@ -379,4 +422,15 @@ footer {
     
     .services-dropdown > a {
         color: #ffffff;
+    }
+
+    .services-dropdown span {
+        cursor: default;
+        color: white;
+        display: block;
+    }
+
+    .services-dropdown span.active {
+        /* Same styles as your active class */
+        color: var(--secondary-color);
     }
