@@ -1,116 +1,121 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fourve Studio - Event Management</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
-    <style>
-        header {
-            position: fixed;
-            width: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            background-color: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            height: 100px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        }
+{% extends "base.html" %}
 
-        .main-nav {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-        }
-    
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-    
-        main {
-            margin-top: 120px;
-            position: relative;
-            z-index: 1;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="logo-container">
-            <a href="{{ url_for('home') }}">
-                <img src="{{ url_for('static', filename='images/Fourve_logo.jpg') }}" 
-                    alt="Fourve Studio Logo" 
-                    class="logo" 
-                    style="width: 75px !important; height: 75px !important;"
-                >
-            </a>
-        </div>
+{% block title %}Fourve Studio - Live Broadcasting{% endblock %}
+
+{% block extra_css %}
+<style>
+    .broadcasting-hero {
+        background: linear-gradient(rgb(65, 105, 225, 0.8), rgba(0, 0, 0, 0.8));
+        background-size: cover;
+        background-position: center;
+        padding: 100px 0;
+        text-align: center;
+        color: white;
+        animation: fadeIn 1s ease-out;
+    }
+
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        padding: 2rem;
+        animation: fadeIn 1s ease-out 0.5s;
+        animation-fill-mode: both;
+    }
+
+    .service-card {
+        background: #383939;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .service-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .why-us {
+        background: #1a1a1a;
+        color: rgb(255, 255, 255);
+        padding: 4rem 2rem;
+        margin: 2rem 0;
+        animation: fadeIn 1s ease-out 1s;
+        animation-fill-mode: both;
+    }
+
+    .cta-section {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: #2e2f2f;
+        animation: fadeIn 1s ease-out 1.5s;
+        animation-fill-mode: both;
+    }
+
+    .cta-button {
+        display: inline-block;
+        padding: 1rem 2rem;
+        background: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background 0.3s ease;
+    }
+
+    .cta-button:hover {
+        background: #0056b3;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="broadcasting-hero">
+    <h1>Broadcasting Excellence</h1>
+    <h2>Taking Your Message to the World</h2>
+</div>
+
+<section class="content-section">
+    <div class="container">
+        <p class="lead">We provide top-tier broadcasting services for live events, webinars, corporate meetings, and more. With state-of-the-art equipment and skilled professionals, we ensure seamless delivery and unparalleled audience engagement.</p>
         
-        <nav class="main-nav">            
-            <ul class="nav-links">
-                <li><a href="{{ url_for('home') }}">Home</a></li>
-                <li><a href="{{ url_for('team') }}">Team</a></li>
-                <li class="services-dropdown">
-                    <a href="{{ url_for('services') }}" class="active">Services</a>
-                    <ul class="dropdown-content">
-                        <li><a href="{{ url_for('services') }}#live-streaming">Live Streaming</a></li>
-                        <li><a href="{{ url_for('services') }}#media-production">Media Production</a></li>
-                        <li><a href="{{ url_for('services') }}#digital-marketing">Digital Marketing</a></li>
-                        <li><a href="{{ url_for('services') }}#event-management">Event Management</a></li>
-                    </ul>
-                </li>
-                <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
-                <li><a href="{{ url_for('join_us') }}">Join Us</a></li>
+        <h3>Our Broadcasting Services</h3>
+        <div class="services-grid">
+            <div class="service-card">
+                <h4>Live Event Streaming</h4>
+                <p>Professional streaming solutions for events of any scale</p>
+            </div>
+            <div class="service-card">
+                <h4>Corporate Broadcasting</h4>
+                <p>Secure and reliable corporate communication solutions</p>
+            </div>
+            <div class="service-card">
+                <h4>Webinars & Conferences</h4>
+                <p>End-to-end online conference management</p>
+            </div>
+            <div class="service-card">
+                <h4>Content Creation</h4>
+                <p>TV and radio content production services</p>
+            </div>
+            <div class="service-card">
+                <h4>Equipment Rental</h4>
+                <p>Professional broadcasting equipment rental services</p>
+            </div>
+        </div>
+
+        <div class="why-us">
+            <h3>Why Choose Us</h3>
+            <ul>
+                <li>High-quality visuals and audio</li>
+                <li>Reliable streaming solutions</li>
+                <li>Expert technical team</li>
             </ul>
-        </nav>
-    </header>
-
-    <main>
-        <!-- Add your specific content here -->
-    </main>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Contact Info</h3>
-                <p>Email: contact@fourvestudio.com</p>
-                <p>Phone: +91 6238806818</p>
-            </div>
-            <div class="footer-section">
-                <h3>Follow Us</h3>
-                <div class="social-links">
-                    <a href="#" target="_blank" rel="noopener noreferrer">Facebook</a>
-                    <a href="#" target="_blank" rel="noopener noreferrer">Twitter</a>
-                    <a href="#" target="_blank" rel="noopener noreferrer">Instagram</a>
-                    <a href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                </div>
-            </div>
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="{{ url_for('services') }}">Services</a></li>
-                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
-                    <li><a href="{{ url_for('join_us') }}">Careers</a></li>
-                </ul>
-            </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; {{ g.now.year }} Fourve Studio and Enterprises LLP. All rights reserved.</p>
-        </div>
-    </footer>
 
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-</body>
-</html>
+        <div class="cta-section">
+            <h3>Let's Broadcast Your Story</h3>
+            <p>Ready to take your message to a global audience?</p>
+            <a href="{{ url_for('contact') }}" class="cta-button">Contact Us</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
