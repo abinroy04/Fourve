@@ -1,156 +1,95 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fourve Studio - Join Us</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
-    <style>
-        header {
-            position: relative;
-            width: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            background-color: #ffffff;
-            height: 165px;
-        }
-        main {
-            margin-top: 120px;
-            position: relative;
-            z-index: 1;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="logo-container">
-            <a href="{{ url_for('home') }}">
-                <img src="{{ url_for('static', filename='images/Fourve_logo.jpg') }}" 
-                    alt="Fourve Studio Logo" 
-                    class="logo" 
-                    style="width: 75px !important; height: 75px !important;"
-                >
-            </a>
-        </div>
-        
-        <nav class="main-nav">
-            <button class="mobile-menu-toggle" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+{% extends "base.html" %}
+
+{% block title %}Fourve Studio - Join Us{% endblock %}
+
+{% block content %}
+<section class="careers-section">
+    <div class="careers-header">
+        <h2>Career Opportunities</h2>
+        <p class="careers-intro">Join our dynamic team and be part of the digital revolution. We're always looking for talented individuals who are passionate about innovation and excellence.</p>
+    </div>
+
+    <div class="jobs-container">
+        {% for job in jobs %}
+        <div class="job-card">
+            <h3>{{ job.title }}</h3>
+            <p class="job-description">{{ job.description }}</p>
             
-            <ul class="nav-links">
-                <li><a href="{{ url_for('home') }}">Home</a></li>
-                <li><a href="{{ url_for('team') }}">Team</a></li>
-                <li class="services-dropdown">
-                    <a href="{{ url_for('services') }}">Services</a>
-                    <ul class="dropdown-content">
-                        <li><a href="{{ url_for('services') }}#live-streaming">Live Streaming</a></li>
-                        <li><a href="{{ url_for('services') }}#media-production">Media Production</a></li>
-                        <li><a href="{{ url_for('services') }}#digital-marketing">Digital Marketing</a></li>
-                        <li><a href="{{ url_for('services') }}#event-management">Event Management</a></li>
-                    </ul>
-                </li>
-                <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
-                <li><a href="{{ url_for('join_us') }}" class="active">Join Us</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section class="careers-section">
-            <div class="careers-header">
-                <h2>Career Opportunities</h2>
-                <p class="careers-intro">Join our dynamic team and be part of the digital revolution. We're always looking for talented individuals who are passionate about innovation and excellence.</p>
-            </div>
-
-            <div class="jobs-container">
-                {% for job in jobs %}
-                <div class="job-card">
-                    <h3>{{ job.title }}</h3>
-                    <p class="job-description">{{ job.description }}</p>
-                    
-                    <div class="job-details">
-                        <h4>Requirements:</h4>
-                        <ul class="requirements-list">
-                            {% for requirement in job.requirements %}
-                            <li>{{ requirement }}</li>
-                            {% endfor %}
-                        </ul>
-                        
-                        <div class="job-meta">
-                            <span class="location">
-                                <i class="location-icon"></i>
-                                {{ job.location }}
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="job-actions">
-                        <button class="apply-btn" onclick="openApplicationForm('{{ job.title }}')">Apply Now</button>
-                        <button class="share-btn" onclick="shareJob('{{ job.title }}')">Share Position</button>
-                    </div>
+            <div class="job-details">
+                <h4>Requirements:</h4>
+                <ul class="requirements-list">
+                    {% for requirement in job.requirements %}
+                    <li>{{ requirement }}</li>
+                    {% endfor %}
+                </ul>
+                
+                <div class="job-meta">
+                    <span class="location">
+                        <i class="location-icon"></i>
+                        {{ job.location }}
+                    </span>
                 </div>
-                {% endfor %}
             </div>
 
+            <div class="job-actions">
+                <button class="apply-btn" onclick="openApplicationForm('{{ job.title }}')">Apply Now</button>
+                <button class="share-btn" onclick="shareJob('{{ job.title }}')">Share Position</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 
     <!-- Application Form Modal -->
-        <div id="applicationModal" class="modal">
-            <div class="modal-content">
-                <span class="close-modal" onclick="closeApplicationForm()">&times;</span>
-                <h3>Apply for <span id="jobTitle"></span></h3>
-            
-                <form id="applicationForm" class="application-form" method="POST" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="fullName">Full Name:</label>
-                        <input type="text" id="fullName" name="fullName" required>
-                    </div>
+    <div id="applicationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeApplicationForm()">&times;</span>
+            <h3>Apply for <span id="jobTitle"></span></h3>
+        
+            <form id="applicationForm" class="application-form" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="fullName">Full Name:</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
 
-                    <div class="form-group">
-                        <label for="email">Email Address:</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
+                <div class="form-group">
+                    <label for="email">Email Address:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
 
-                    <div class="form-group">
-                        <label for="phone">Phone Number:</label>
-                        <input type="tel" id="phone" name="phone" required>
-                    </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
 
-                    <div class="form-group">
-                        <label for="experience">Years of Experience:</label>
-                        <input type="number" id="experience" name="experience" min="0" required>
-                    </div>
+                <div class="form-group">
+                    <label for="experience">Years of Experience:</label>
+                    <input type="number" id="experience" name="experience" min="0" required>
+                </div>
 
-                    <div class="form-group">
-                        <label for="resume">Upload Resume (PDF only):</label>
-                        <input type="file" id="resume" name="resume" accept=".pdf" required>
-                    </div>
+                <div class="form-group">
+                    <label for="resume">Upload Resume (PDF only):</label>
+                    <input type="file" id="resume" name="resume" accept=".pdf" required>
+                </div>
 
-                    <div class="form-group">
-                        <label for="coverLetter">Cover Letter:</label>
-                        <textarea id="coverLetter" name="coverLetter" rows="5" required></textarea>
-                    </div>
+                <div class="form-group">
+                    <label for="coverLetter">Cover Letter:</label>
+                    <textarea id="coverLetter" name="coverLetter" rows="5" required></textarea>
+                </div>
 
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" name="terms" required>
-                            I agree to the processing of my personal data according to the privacy policy
-                        </label>
-                    </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" name="terms" required>
+                        I agree to the processing of my personal data according to the privacy policy
+                    </label>
+                </div>
 
-                    <div class="form-actions">
-                        <button type="button" class="cancel-btn" onclick="closeApplicationForm()">Cancel</button>
-                        <button type="submit" class="submit-btn">Submit Application</button>
-                    </div>
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" onclick="closeApplicationForm()">Cancel</button>
+                    <button type="submit" class="submit-btn">Submit Application</button>
+                </div>
             </form>
         </div>
     </div>
-</section>
-</main>
-
 
     <!-- General Application Section -->
     <div class="general-application">
@@ -183,279 +122,36 @@
         </div>
     </div>
 </section>
+{% endblock %}
 
+{% block extra_js %}
 <script>
-function openApplicationForm(jobTitle) {
-    document.getElementById('jobTitle').textContent = jobTitle;
-    document.getElementById('applicationModal').style.display = 'block';
-}
-
-function closeApplicationForm() {
-    document.getElementById('applicationModal').style.display = 'none';
-    document.getElementById('applicationForm').reset();
-}
-
-function shareJob(jobTitle) {
-    if (navigator.share) {
-        navigator.share({
-            title: 'Job Opening at Fourve Studio',
-            text: `Check out this ${jobTitle} position at Fourve Studio!`,
-            url: window.location.href
-        })
-        .catch(err => console.error('Error sharing:', err));
-    } else {
-        // Fallback for browsers that don't support the Web Share API
-        alert('Use this link to share the job posting: ' + window.location.href);
+    function openApplicationForm(jobTitle) {
+        document.getElementById('jobTitle').textContent = jobTitle;
+        document.getElementById('applicationModal').style.display = 'block';
     }
-}
 
-// Close modal when clicking outside
-window.onclick = function(event) {
-    if (event.target == document.getElementById('applicationModal')) {
-        closeApplicationForm();
+    function closeApplicationForm() {
+        document.getElementById('applicationModal').style.display = 'none';
+        document.getElementById('applicationForm').reset();
     }
-}
+
+    function shareJob(jobTitle) {
+        if (navigator.share) {
+            navigator.share({
+                title: 'Job Opening at Fourve Studio',
+                text: `Check out this job opening for ${jobTitle} at Fourve Studio!`,
+                url: window.location.href,
+            })
+            .catch((error) => console.log('Error sharing:', error));
+        }
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('applicationModal')) {
+            closeApplicationForm();
+        }
+    }
 </script>
-</body>
-</html>join_us.html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fourve Studio - Join Us</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
-</head>
-<body>
-    <header>
-        <div class="logo-container">
-            <a href="{{ url_for('home') }}">
-                <img src="{{ url_for('static', filename='images/Fourve_logo.jpg') }}" 
-                    alt="Fourve Studio Logo" 
-                    class="logo" 
-                    style="width: 75px !important; height: 75px !important;"
-                >
-            </a>
-        </div>
-        
-        <nav class="main-nav">
-            <button class="mobile-menu-toggle" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            
-            <ul class="nav-links">
-                <li><a href="{{ url_for('home') }}">Home</a></li>
-                <li><a href="{{ url_for('team') }}">Team</a></li>
-                <li class="services-dropdown">
-                    <a href="{{ url_for('services') }}">Services</a>
-                    <ul class="dropdown-content">
-                        <li><a href="{{ url_for('services') }}#live-streaming">Live Streaming</a></li>
-                        <li><a href="{{ url_for('services') }}#media-production">Media Production</a></li>
-                        <li><a href="{{ url_for('services') }}#digital-marketing">Digital Marketing</a></li>
-                        <li><a href="{{ url_for('services') }}#event-management">Event Management</a></li>
-                    </ul>
-                </li>
-                <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
-                <li><a href="{{ url_for('join_us') }}" class="active">Join Us</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="flash-message {{ category }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-
-        <section class="careers-section">
-            <div class="careers-header">
-                <h2>Career Opportunities</h2>
-                <p class="careers-intro">Join our dynamic team and be part of the digital revolution. We're always looking for talented individuals who are passionate about innovation and excellence.</p>
-            </div>
-
-            <div class="jobs-container">
-                {% for job in jobs %}
-                <div class="job-card">
-                    <h3>{{ job.title }}</h3>
-                    <p class="job-description">{{ job.description }}</p>
-                    
-                    <div class="job-details">
-                        <h4>Requirements:</h4>
-                        <ul class="requirements-list">
-                            {% for requirement in job.requirements %}
-                            <li>{{ requirement }}</li>
-                            {% endfor %}
-                        </ul>
-                        
-                        <div class="job-meta">
-                            <span class="location">
-                                <i class="location-icon"></i>
-                                {{ job.location }}
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="job-actions">
-                        <button class="apply-btn" onclick="openApplicationForm('{{ job.title }}')">Apply Now</button>
-                        <button class="share-btn" onclick="shareJob('{{ job.title }}')">Share Position</button>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-
-            <!-- Application Form Modal -->
-            <div id="applicationModal" class="modal">
-                <div class="modal-content">
-                    <span class="close-modal" onclick="closeApplicationForm()">&times;</span>
-                    <h3>Apply for <span id="jobTitle"></span></h3>
-                
-                    <form id="applicationForm" class="application-form" method="POST" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label for="fullName">Full Name:</label>
-                            <input type="text" id="fullName" name="fullName" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Email Address:</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="phone">Phone Number:</label>
-                            <input type="tel" id="phone" name="phone" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="experience">Years of Experience:</label>
-                            <input type="number" id="experience" name="experience" min="0" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="resume">Upload Resume (PDF only):</label>
-                            <input type="file" id="resume" name="resume" accept=".pdf" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="coverLetter">Cover Letter:</label>
-                            <textarea id="coverLetter" name="coverLetter" rows="5" required></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label>
-                                <input type="checkbox" name="terms" required>
-                                I agree to the processing of my personal data according to the privacy policy
-                            </label>
-                        </div>
-
-                        <div class="form-actions">
-                            <button type="button" class="cancel-btn" onclick="closeApplicationForm()">Cancel</button>
-                            <button type="submit" class="submit-btn">Submit Application</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- General Application Section -->
-            <div class="general-application">
-                <h3>Don't see a position that matches your skills?</h3>
-                <p>We're always looking for talented individuals to join our team. Send us your resume and we'll keep it on file for future opportunities.</p>
-                <button class="general-apply-btn" onclick="openApplicationForm('General Application')">Submit General Application</button>
-            </div>
-
-            <!-- Additional Information Section -->
-            <div class="careers-info">
-                <div class="info-card">
-                    <h4>Why Join Us?</h4>
-                    <ul>
-                        <li>Innovative work environment</li>
-                        <li>Professional growth opportunities</li>
-                        <li>Competitive compensation</li>
-                        <li>Health insurance benefits</li>
-                        <li>Work-life balance</li>
-                    </ul>
-                </div>
-
-                <div class="info-card">
-                    <h4>Our Culture</h4>
-                    <p>At Fourve Studio, we believe in fostering a culture of innovation, collaboration, and continuous learning. Our team members are encouraged to think creatively and take initiative in their roles.</p>
-                </div>
-
-                <div class="info-card">
-                    <h4>Growth Opportunities</h4>
-                    <p>We invest in our employees' professional development through training programs, workshops, and mentorship opportunities. Join us to grow your career while working on exciting projects.</p>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Contact Info</h3>
-                <p>Email: contact@fourvestudio.com</p>
-                <p>Phone: +91 6238806818</p>
-            </div>
-            <div class="footer-section">
-                <h3>Follow Us</h3>
-                <div class="social-links">
-                    <a href="#" target="_blank" rel="noopener noreferrer">Facebook</a>
-                    <a href="#" target="_blank" rel="noopener noreferrer">Twitter</a>
-                    <a href="#" target="_blank" rel="noopener noreferrer">Instagram</a>
-                    <a href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                </div>
-            </div>
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="{{ url_for('services') }}">Services</a></li>
-                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
-                    <li><a href="{{ url_for('join_us') }}">Careers</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; {{ g.now.year }} Fourve Studio and Enterprises LLP. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/form.js') }}"></script>
-    <script>
-        function openApplicationForm(jobTitle) {
-            document.getElementById('jobTitle').textContent = jobTitle;
-            document.getElementById('applicationModal').style.display = 'block';
-        }
-
-        function closeApplicationForm() {
-            document.getElementById('applicationModal').style.display = 'none';
-            document.getElementById('applicationForm').reset();
-        }
-
-        function shareJob(jobTitle) {
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Job Opening at Fourve Studio',
-                    text: `Check out this job opening for ${jobTitle} at Fourve Studio!`,
-                    url: window.location.href,
-                })
-                .catch((error) => console.log('Error sharing:', error));
-            }
-        }
-
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            if (event.target == document.getElementById('applicationModal')) {
-                closeApplicationForm();
-            }
-        }
-    </script>
-</body>
-</html>
+{% endblock %}
