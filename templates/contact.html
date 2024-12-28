@@ -1,24 +1,39 @@
-/contact.html
+
 {% extends "base.html" %}
 
 {% block title %}Fourve Studio - Contact Us{% endblock %}
 
 {% block extra_css %}
 <style>
-    .contact-section {
-        animation: fadeIn 1s ease-out;
+    main {
+        background: linear-gradient(rgba(65, 105, 225, 0.8), rgba(0, 0, 0, 0.9));
+        min-height: 100px;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        position: relative;
+        z-index: 0;
     }
 
-    .contact-form {
-        animation: fadeIn 1s ease-out 0.5s;
-        animation-fill-mode: both;
+    .contact-section {
+        position: relative;
+        z-index: 1;
+        margin-top: 10px;
+        padding: 2rem;
+    }
+
+    .contact-header {
+        text-align: center;
+        margin-top: 7rem;
+        margin-bottom: 2rem;
+        font-size: 2.5rem;
+        color: white;
+        animation: fadeIn 1s ease-out;
     }
 
     .button-container {
         background: rgba(255, 255, 255, 0.1);
-        padding: 20px;
         border-radius: 30px;
-        margin-top: 20px;
         display: inline-block;
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
@@ -39,11 +54,47 @@
         transform: translateY(-2px);
         box-shadow: 0 5px 15px rgba(65, 105, 225, 0.3);
     }
+
+    .flash-container {
+        margin: 20px auto;
+        padding: 15px;
+        max-width: 600px;
+        text-align: center;
+    }
+
+    .flash-message {
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 8px;
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    .flash-message.success {
+        background-color: rgba(46, 204, 113, 0.2);
+        color: #2ecc71;
+    }
+
+    .flash-message.error {
+        background-color:  linear-gradient(rgb(231, 76, 60, 0.2), rgba(0, 0, 0, 0.2));
+        color: #e74c3c;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
 <section class="contact-section">
+    <h1 class="contact-header">Reach out to us, we're all ears</h1>
+    <div class="flash-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
     <div class="contact-container">
         <form method="POST" action="{{ url_for('contact') }}" class="contact-form">
             <div class="form-group">
