@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, redirect, url_for, flash, g
 import smtplib
 from email.mime.text import MIMEText
 from datetime import datetime
-import os
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key-here'  # Required for flashing messages
@@ -11,15 +10,12 @@ app.secret_key = 'your-secret-key-here'  # Required for flashing messages
 def add_now():
     from datetime import datetime
     g.now = datetime.now()
-
+    
 @app.route('/')
 def home():
-    #now = datetime.now()
-    #return render_template('home.html', active_page='home', now=now)
-    return render_template('home.html')
+    now = datetime.now()
+    return render_template('home.html', active_page='home', now=now)
 
-
-    
 @app.route('/team')
 def team():
     team_members = [
@@ -92,33 +88,20 @@ def digimark():
 def eventmgmt():
     return render_template('eventmgmt.html', active_page='eventmgmt')
 
-@app.route('/join-us')
-def join_us():
-    job_listings = [
-        {
-            'title': 'Digital Marketing Specialist',
-            'description': 'Looking for an experienced digital marketing professional.',
-            'requirements': ['3+ years experience', 'Social media expertise', 'Content creation skills'],
-            'location': 'Mumbai, India'
-        }
-    ]
-    return render_template('join_us.html', active_page='join_us', jobs=job_listings)
-
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':
         name = request.form.get('name')
-        email = request.form.get('email')
+        sender_email = request.form.get('email')
         message = request.form.get('message')
         
         try:
-            # Email configuration (replace with your email settings)
-            sender_email = "your-email@example.com"
+            # Email configuration
             receiver_email = "fourve.dimension@gmail.com"
-            password = "your-email-password"
+            password = "your-app-password"  # Gmail App Password
 
-            msg = MIMEText(f"Name: {name}\nEmail: {email}\nMessage: {message}")
+            msg = MIMEText(f"Name: {name}\nEmail: {sender_email}\nMessage: {message}")
             msg['Subject'] = 'New Contact Form Submission'
             msg['From'] = sender_email
             msg['To'] = receiver_email
@@ -138,7 +121,30 @@ def contact():
     
     return render_template('contact.html', active_page='contact')
 
+@app.route('/join-us')
+def join_us():
+    job_listings = [
+        {
+            'title': 'Digital Marketing Specialist',
+            'description': 'Looking for an experienced digital marketing professional.',
+            'requirements': ['3+ years experience', 'Social media expertise', 'Content creation skills'],
+            'location': 'Mumbai, India'
+        },
+        {
+            'title': 'Video Editor',
+            'description': 'Seeking talented video editor for our media production team.',
+            'requirements': ['Adobe Premiere Pro', 'After Effects', 'Creative storytelling'],
+            'location': 'Remote'
+        },
+        {
+            'title': 'Event Coordinator',
+            'description': 'Join our event management team to plan and execute memorable events.',
+            'requirements': ['Event planning experience', 'Strong organizational skills', 'Excellent communication'],
+            'location': 'Bangalore'
+        }
+        # Add more job listings as needed
+    ]
+    return render_template('join_us.html', active_page='join_us', jobs=job_listings)
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host = '0.0.0.0',port=port)
+    app.run(debug=False)
