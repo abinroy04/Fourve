@@ -1,6 +1,130 @@
-<!--{% extends "base.html" %}
-
+{% extends "base.html" %}
 {% block title %}Fourve Studio{% endblock %}
+
+{% block extra_css %}
+<style>
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .hero {
+        background: linear-gradient(rgb(65, 105, 225, 0.8), rgba(0, 0, 0, 0.8));
+        background-size: cover;
+        animation: fadeIn 1s ease-out;
+        background-position: center;
+        padding: 100px 0;
+        text-align: center;
+        color: white;
+    }
+    
+    .hero-content h1 {
+        background: var(--primary-color);
+        padding-top: 50px;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        font-weight: bold;
+        
+    }
+
+    .hero-content p {
+        animation: fadeIn 1s ease-out 0.5s;
+        animation-fill-mode: both;
+    }
+
+    .hero-content .cta-button {
+        animation: fadeIn 1s ease-out 1s;
+        animation-fill-mode: both;
+        background: linear-gradient(rgb(65, 105, 225, 0.8));
+        padding: 1rem 2rem;
+        border-radius: 30px;
+        text-decoration: none;
+        color: white;
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+
+    .hero-content .cta-button:hover {
+        box-shadow: 0 0 20px rgb(250, 250, 250);
+    }
+
+    .service-box {
+        background-color: #000000;
+        padding: 2rem;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .service-box:hover {
+        transform: translateY(-10px);
+        box-shadow: 
+            0 0 50px rgba(65, 105, 225),
+            inset 2px 2px 20px rgb(110, 139, 227);
+    }
+
+    .service-box img {
+        width: 100%;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+    }
+
+    .service-box h3 {
+        color: #ffffff;
+        margin-bottom: 1rem;
+    }
+
+    .service-box p {
+        color: #ffffff;
+        margin-bottom: 1.5rem;
+    }
+
+    .services-overview h2 {
+        text-align: center;
+        margin-bottom: 2rem;
+        animation: fadeIn 1s ease-out 1.5s;
+        animation-fill-mode: both;
+    }
+
+    .service-box {
+        background-color: #000000;
+        padding: 2rem;
+        border-radius: 10px;
+        transition: all 0.2s ease;
+        opacity: 0;
+        transform: translateY(100px);
+    }
+
+    .service-box.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .learn-more {
+        display: inline-block;
+        padding: 0.8rem 1.5rem;
+        background: linear-gradient(45deg, rgb(65, 105, 225), rgb(110, 139, 227));
+        color: white;
+        text-decoration: none;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        margin-top: 1rem;
+    }
+
+    .learn-more:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0 15px rgba(65, 105, 225, 0.5);
+        background: linear-gradient(45deg, rgb(110, 139, 227), rgb(65, 105, 225));
+    }
+
+</style>
+{% endblock %}
 
 {% block content %}
 <section class="hero">
@@ -40,16 +164,20 @@
         </div>
     </div>
 </section>
-{% endblock %}
-*/
--->
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Test Home</title>
-</head>
-<body>
-    <h1>Welcome to the Home Page</h1>
-</body>
-</html>
+<script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    document.querySelectorAll('.service-box').forEach((box) => {
+        observer.observe(box);
+    });
+</script>
+{% endblock %}
