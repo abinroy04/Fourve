@@ -13,6 +13,32 @@
         animation: fadeIn 1s ease-out 0.5s;
         animation-fill-mode: both;
     }
+
+    .button-container {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        border-radius: 30px;
+        margin-top: 20px;
+        display: inline-block;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .submit-button {
+        background: linear-gradient(45deg, #4169e1, #6e8be3);
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .submit-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(65, 105, 225, 0.3);
+    }
 </style>
 {% endblock %}
 
@@ -32,7 +58,9 @@
                 <label for="message">Message:</label>
                 <textarea id="message" name="message" required></textarea>
             </div>
-            <button type="submit" class="submit-button">Send Message</button>
+            <div class="button-container">
+                <button type="submit" class="submit-button">Send Message</button>
+            </div>
         </form>
     </div>
 </section>
