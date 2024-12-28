@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, g
 import smtplib
 from email.mime.text import MIMEText
 from datetime import datetime
+import os
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key-here'  # Required for flashing messages
@@ -69,31 +70,42 @@ def contact():
         name = request.form.get('name')
         sender_email = request.form.get('email')
         message = request.form.get('message')
-        
+
+        # Debugging print statements
+        print(f"Received form data - Name: {name}, Email: {sender_email}, Message: {message}")
+
+        if not name or not sender_email or not message:
+            flash("All fields are required!", "error")
+            return redirect(url_for('contact'))
+
         try:
             # Email configuration
-            receiver_email = "fourve.dimension@gmail.com"
-            password = "your-app-password"  # Gmail App Password
+            receiver_email = os.environ.get('EMAIL_ID')
+            sender_account_email = os.environ.get('EMAIL_ID')
+            sender_account_password = os.environ.get('APP_PASSWORD')
 
             msg = MIMEText(f"Name: {name}\nEmail: {sender_email}\nMessage: {message}")
             msg['Subject'] = 'New Contact Form Submission'
-            msg['From'] = sender_email
+            msg['From'] = sender_account_email
             msg['To'] = receiver_email
+            msg['Reply-To'] = sender_email
 
-            # Send email
             with smtplib.SMTP('smtp.gmail.com', 587) as server:
                 server.starttls()
-                server.login(sender_email, password)
+                server.login(sender_account_email, sender_account_password)
                 server.send_message(msg)
 
             flash('Thank you for your message! We will get back to you soon.', 'success')
         except Exception as e:
-            flash('Sorry, there was an error sending your message. Please try again later.', 'error')
+            flash('We are unable to recieve your message at the moment. Try contacting us via mobile.', 'error')
             print(f"Error sending email: {e}")
+            print(f"Email: {sender_account_email}, Password: {sender_account_password}")
+
 
         return redirect(url_for('contact'))
-    
+
     return render_template('contact.html', active_page='contact')
+
 
 @app.route('/join-us')
 def join_us():
@@ -121,5 +133,5 @@ def join_us():
     return render_template('join_us.html', active_page='join_us', jobs=job_listings)
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(debug=False)
+
