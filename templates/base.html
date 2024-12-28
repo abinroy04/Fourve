@@ -49,7 +49,7 @@
     <header>
         <div class="logo-container">
             <a href="{{ url_for('home') }}">
-                <img src="{{ url_for('static', filename='images/Fourve_logo.jpg') }}" 
+                <img src="{{ url_for('static', filename='images/Fourve_logo.png') }}" 
                     alt="Fourve Studio Logo" 
                     class="logo" 
                     style="width: 75px !important; height: 75px !important;"
@@ -62,12 +62,12 @@
                 <li><a href="{{ url_for('home') }}" {% if active_page == 'home' %}class="active"{% endif %}>Home</a></li>
                 <li><a href="{{ url_for('team') }}" {% if active_page == 'team' %}class="active"{% endif %}>Team</a></li>
                 <li class="services-dropdown">
-                    <span {% if active_page in ['broadcasting', 'mediapro', 'digimark', 'eventmgmt'] %}class="active"{% endif %}>Our Services</span>
+                    <span {% if active_page in ['broadcasting', 'mediapro', 'digimark', 'eventmgmt'] %}class="active"{% endif %}>Services</span>
                     <ul class="dropdown-content">
-                        <li><a href="{{ url_for('broadcasting') }}">Live Streaming</a></li>
-                        <li><a href="{{ url_for('mediapro') }}">Media Production</a></li>
-                        <li><a href="{{ url_for('digimark') }}">Digital Marketing</a></li>
-                        <li><a href="{{ url_for('eventmgmt') }}">Event Management</a></li>
+                        <li><a href="{{ url_for('broadcasting') }}#live-streaming">Live Streaming</a></li>
+                        <li><a href="{{ url_for('mediapro') }}#media-production">Media Production</a></li>
+                        <li><a href="{{ url_for('digimark') }}#digital-marketing">Digital Marketing</a></li>
+                        <li><a href="{{ url_for('eventmgmt') }}#event-management">Event Management</a></li>
                     </ul>
                 </li>
                 <li><a href="{{ url_for('contact') }}" {% if active_page == 'contact' %}class="active"{% endif %}>Contact Us</a></li>
@@ -77,16 +77,6 @@
     </header>
 
     <main>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="flash-message {{ category }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-        
         {% block content %}{% endblock %}
     </main>
 
@@ -102,7 +92,7 @@
                 <div class="social-links">
                     <a href="#" target="_blank" rel="noopener noreferrer">Facebook</a>
                     <a href="#" target="_blank" rel="noopener noreferrer">Twitter</a>
-                    <a href="https://www.instagram.com/4ve.dn/" target="_blank" rel="noopener noreferrer">Instagram</a>
+                    <a href="#" target="https://www.instagram.com/4ve.dn/" rel="noopener noreferrer">Instagram</a>
                     <a href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a>
                 </div>
             </div>
