@@ -6,6 +6,8 @@ from email.mime.text import MIMEText
 from datetime import datetime
 from werkzeug.utils import secure_filename
 from functools import wraps
+import boto3
+from botocore.exceptions import NoCredentialsError, ClientError
 
 app = Flask(__name__)
 
@@ -20,6 +22,15 @@ if not app.secret_key:
 # Add these configurations after app initialization
 app.config['ADMIN_USERNAME'] = os.environ.get('ADMIN_USERNAME', 'admin')
 app.config['ADMIN_PASSWORD'] = os.environ.get('ADMIN_PASSWORD', 'admin123')
+
+#intialize s3 client
+s3 = boto3.client(
+    's3',
+    aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
+    aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'),
+    region_name=os.environ.get('AWS_REGION')
+)
+BUCKET_NAME = os.environ.get('AWS_BUCKET_NAME')
 
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads/resumes')
 ALLOWED_EXTENSIONS = {'pdf', 'doc', 'docx'}
@@ -128,6 +139,31 @@ def contact():
 
     return render_template('contact.html', active_page='contact')
 
+def upload_to_s3(file, bucket_name, folder_name, acl="private"):
+    try:
+        s3 = boto3.client(
+            "s3",
+            aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),
+            aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'),
+            region_name=os.getenv('AWS_REGION')
+        )
+        file_key = f"{folder_name}/{file.filename}"
+        s3.upload_fileobj(
+            file,
+            bucket_name,
+            file_key,
+            ExtraArgs={
+                "ACL": acl,
+                "ContentType": file.content_type
+            }
+        )
+        return f"https://{bucket_name}.s3.{os.getenv('AWS_REGION')}.amazonaws.com/{file_key}"
+    except NoCredentialsError:
+        print("AWS credentials not found.")
+        return None
+    except Exception as e:
+        print(f"Error uploading to S3: {e}")
+        return None
 
 @app.route('/join-us', methods=['GET', 'POST'])
 def join_us():
@@ -150,9 +186,10 @@ def join_us():
                 'Portfolio of work',
                 'Understanding of social media formats'
             ],
-            'location': 'Remote / KErala'
+            'location': 'Remote / Kerala'
         }
     ]
+
     if request.method == 'POST':
         try:
             # Get form data
@@ -164,21 +201,18 @@ def join_us():
             position = request.form.get('jobTitle', 'General Application')
 
             # Handle resume file upload
-            if 'resume' not in request.files:
+            if 'resume' not in request.files or request.files['resume'].filename == '':
                 flash('No resume file uploaded', 'error')
                 return redirect(request.url)
-            
+
             file = request.files['resume']
-            if file.filename == '':
-                flash('No selected file', 'error')
-                return redirect(request.url)
 
             if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                
-                os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                # Upload file to S3
+                file_url = upload_to_s3(file, os.getenv('AWS_BUCKET_NAME'), "resumes")
+                if not file_url:
+                    flash('Error uploading file. Please try again.', 'error')
+                    return redirect(request.url)
 
                 # Send email notification
                 msg = MIMEText(f"""
@@ -193,9 +227,8 @@ def join_us():
                     Cover Letter:
                     {cover_letter}
 
-                    Resume file saved as: {filename}
+                    Resume link: {file_url}
                 """)
-                
                 msg['Subject'] = f'New Job Application - {position}'
                 msg['From'] = os.environ.get('EMAIL_ID')
                 msg['To'] = os.environ.get('EMAIL_ID')
@@ -215,7 +248,8 @@ def join_us():
             flash('There was an error processing your application. Please try again.', 'error')
 
         return redirect(url_for('join_us'))
-    return render_template('join_us.html',active_page='join_us', job_listings=job_listings)
+
+    return render_template('join_us.html', active_page='join_us', job_listings=job_listings)
 
 @app.route('/test_env', methods=['GET'])
 def test_env():
@@ -261,13 +295,20 @@ def admin_logout():
 @app.route('/admin/dashboard')
 @admin_required
 def admin_dashboard():
-    # Get list of all resumes
-    resume_dir = app.config['UPLOAD_FOLDER']
-    resumes = []
-    if os.path.exists(resume_dir):
-        resumes = os.listdir(resume_dir)
-    return render_template('admin_dashboard.html', resumes=resumes)
-
+    try:
+        # List files in the S3 bucket
+        response = s3.list_objects_v2(Bucket=BUCKET_NAME, Prefix="resumes/")
+        resumes = [
+            obj['Key'].split('/')[-1]  # Extract the filename from the S3 key
+            for obj in response.get('Contents', [])
+            if obj['Key'] != "resumes/"  # Exclude the folder itself
+        ]
+        return render_template('admin_dashboard.html', resumes=resumes)
+    except ClientError as e:
+        print(f"Error listing files: {e}")
+        flash("Error loading files from S3.", "error")
+        return redirect(url_for('home'))
+    
 # Update the download_resume route with the decorator
 @app.route('/uploads/resumes/<filename>')
 @admin_required
@@ -277,19 +318,17 @@ def download_resume(filename):
         if '..' in filename or filename.startswith('/'):
             flash('Invalid file path', 'error')
             return redirect(url_for('admin_dashboard'))
-            
-        if not os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], filename)):
-            flash('File not found', 'error')
-            return redirect(url_for('admin_dashboard'))
-            
-        return send_from_directory(
-            app.config['UPLOAD_FOLDER'],
-            filename,
-            as_attachment=True
+        
+        # Generate a presigned URL for the file
+        presigned_url = s3.generate_presigned_url(
+            'get_object',
+            Params={'Bucket': BUCKET_NAME, 'Key': f"resumes/{filename}"},
+            ExpiresIn=3600  # Link valid for 1 hour
         )
-    except Exception as e:
-        print(f"Download error: {e}")  # For debugging
-        flash('Error downloading file', 'error')
+        return redirect(presigned_url)
+    except ClientError as e:
+        print(f"Error downloading file: {e}")
+        flash('Error downloading file from S3.', 'error')
         return redirect(url_for('admin_dashboard'))
 
 @app.route('/admin/delete_resume/<filename>')
@@ -300,19 +339,15 @@ def delete_resume(filename):
         if '..' in filename or filename.startswith('/'):
             flash('Invalid file path', 'error')
             return redirect(url_for('admin_dashboard'))
-            
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        if os.path.exists(file_path):
-            os.remove(file_path)
-            flash(f'Successfully deleted {filename}', 'success')
-        else:
-            flash('File not found', 'error')
-    except Exception as e:
-        print(f"Delete error: {e}")  # For debugging
-        flash('Error deleting file', 'error')
+        
+        # Delete the file from S3
+        s3.delete_object(Bucket=BUCKET_NAME, Key=f"resumes/{filename}")
+        flash(f"Successfully deleted {filename} from S3.", "success")
+    except ClientError as e:
+        print(f"Error deleting file: {e}")
+        flash('Error deleting file from S3.', 'error')
     
     return redirect(url_for('admin_dashboard'))
-
 
 if __name__ == '__main__':
     app.run(debug=False)
