@@ -188,7 +188,7 @@ def join_us():
             ],
             'location': 'Remote / Kerala'
         },
-        'title': 'Web Development Team Lead',
+        {'title': 'Web Development Team Lead',
             'description': 'Looking for an experienced professional to lead our web development team.',
             'requirements': [
                 '2+ years experience',
