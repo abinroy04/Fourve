@@ -187,6 +187,14 @@ def join_us():
                 'Understanding of social media formats'
             ],
             'location': 'Remote / Kerala'
+        },
+        'title': 'Web Development Team Lead',
+            'description': 'Looking for an experienced professional to lead our web development team.',
+            'requirements': [
+                '2+ years experience',
+                'Full stack development'
+            ],
+            'location': 'Remote / Kerala'
         }
     ]
 
