@@ -8,6 +8,16 @@
 
 @media screen and (max-width: 768px) {
     /* Header & Navigation */
+    header {
+        padding: 0.5rem;
+        position: fixed;
+        height: auto;
+    }
+
+    .logo {
+        max-height: 40px;
+    }
+
     .nav-links {
         display: none;
         flex-direction: column;
@@ -19,6 +29,9 @@
         border: 1px solid var(--neutral-gray);
         padding: 1rem;
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        gap: 1rem;
+        width: 100%;
+        z-index: 1000;
     }
 
     .nav-links.active {
@@ -47,9 +60,11 @@
 
     /* Dropdown adjustments */
     .services-dropdown .dropdown-content {
-        position: static;
+        position: relative;
         box-shadow: none;
         display: none;
+        width: 100%;
+        margin-top: 0.5rem;
     }
 
     .services-dropdown.active .dropdown-content {
@@ -66,10 +81,51 @@
     /* Hero section */
     .hero {
         padding: 6rem 1rem;
+        padding-top: 80px;
     }
 
     .hero h1 {
-        font-size: 2rem;
+        font-size: 1.5rem;
+        padding-top: 20px;
+    }
+
+    /* Content adjustments */
+    main {
+        margin-top: 60px;
+    }
+
+    .service-box {
+        margin: 1rem;
+    }
+
+    /* Team section adjustments */
+    .team-members {
+        padding: 0.5rem;
+    }
+
+    .team-member {
+        flex-basis: 100%;
+        margin: 1rem 0;
+    }
+
+    .team-member img {
+        width: 150px;
+        height: 150px;
+    }
+
+    /* Footer adjustments */
+    .footer-content {
+        padding: 1rem;
+    }
+
+    .social-links {
+        flex-wrap: wrap;
+    }
+
+    .social-links a {
+        margin: 0.5rem;
+        padding: 0.5rem;
+        flex-basis: calc(50% - 1rem);
     }
 }
 
@@ -104,5 +160,23 @@
     .social-links {
         justify-content: center;
         margin-top: 1rem;
+    }
+
+    .hero-content h1 {
+        font-size: 1.25rem;
+        padding-top: 40px;
+    }
+
+    .services-grid {
+        padding: 1rem;
+    }
+
+    .service-box {
+        margin: 0.5rem;
+    }
+
+    .footer-section {
+        margin-left: 0;
+        text-align: center;
     }
 }
