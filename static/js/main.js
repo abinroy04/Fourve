@@ -3,10 +3,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
     const mainNav = document.querySelector('.main-nav');
     const servicesDropdown = document.querySelector('.services-dropdown');
-    const navLinks = document.querySelector('.nav-links');
 
-    // Toggle mobile menu
-    if (mobileMenuToggle) {
+    if (mobileMenuToggle && mainNav) {
         mobileMenuToggle.addEventListener('click', function(e) {
             e.stopPropagation();
             this.classList.toggle('active');
@@ -14,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Handle services dropdown on mobile
     if (servicesDropdown) {
         servicesDropdown.addEventListener('click', function(e) {
             if (window.innerWidth <= 768) {
