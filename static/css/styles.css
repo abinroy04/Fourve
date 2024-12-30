@@ -482,21 +482,53 @@ table {
 @media screen and (max-width: 768px) {
     .mobile-menu-toggle {
         display: block;
-        z-index: 1001;
-        background: transparent;
-        border: none;
-        padding: 10px;
+        position: absolute;
+        right: 20px;
+        top: 20px;
     }
 
-    .mobile-menu-toggle span {
+    .main-nav {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: #000000;
+        padding: 0;
+    }
+
+    .main-nav.active {
+        display: block !important;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.95);
+    }
+
+    .nav-links li {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .services-dropdown {
+        width: 100%;
+    }
+
+    .services-dropdown .dropdown-content {
+        position: static;
+        width: 100%;
+        margin-top: 10px;
+        display: none;
+        background: rgba(0, 0, 0, 0.8);
+    }
+
+    .services-dropdown.active .dropdown-content {
         display: block;
-        width: 25px;
-        height: 2px;
-        margin: 5px 0;
-        background-color: white;
-        transition: all 0.3s ease;
     }
 
+    /* Animation for hamburger menu */
     .mobile-menu-toggle.active span:nth-child(1) {
         transform: rotate(-45deg) translate(-5px, 6px);
     }
@@ -507,44 +539,5 @@ table {
 
     .mobile-menu-toggle.active span:nth-child(3) {
         transform: rotate(45deg) translate(-5px, -6px);
-    }
-
-    .main-nav {
-        position: fixed;
-        top: 60px;
-        left: 0;
-        width: 100%;
-        background: rgba(0, 0, 0, 0.95);
-        padding: 1rem;
-        display: none;
-    }
-
-    .main-nav.active {
-        display: block;
-    }
-
-    .nav-links {
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .nav-links li {
-        width: 100%;
-        text-align: center;
-    }
-
-    .services-dropdown .dropdown-content {
-        position: static;
-        width: 100%;
-        margin-top: 0.5rem;
-    }
-
-    .services-dropdown:hover .dropdown-content {
-        display: none;
-    }
-
-    .services-dropdown.active .dropdown-content {
-        display: block;
     }
 }
