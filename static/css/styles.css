@@ -485,6 +485,9 @@ table {
         padding: 1rem;
         height: auto;
         min-height: 60px;
+        position: fixed;
+        z-index: 1000;
+        background-color: rgba(0, 0, 0, 0.95); /* Make header background more solid */
     }
 
     .mobile-menu-toggle {
@@ -521,20 +524,26 @@ table {
 
     .main-nav {
         display: none;
-        position: fixed;
-        top: 60px;
+        position: absolute; /* Change from fixed to absolute */
+        top: 100%; /* Position it right below the header */
         left: 0;
         width: 100%;
-        height: calc(100vh - 60px);
         background: rgba(0, 0, 0, 0.95);
         padding: 1rem;
         overflow-y: auto;
         transition: all 0.3s ease-in-out;
+        max-height: calc(100vh - 60px); /* Limit maximum height */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
     .main-nav.active {
         display: block;
-        animation: slideIn 0.3s ease-in-out;
+    }
+
+    /* Ensure main content remains visible */
+    main {
+        position: relative;
+        z-index: 1;
     }
 
     @keyframes slideIn {
