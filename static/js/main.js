@@ -3,31 +3,54 @@ document.addEventListener('DOMContentLoaded', function() {
     const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
     const mainNav = document.querySelector('.main-nav');
     const servicesDropdown = document.querySelector('.services-dropdown');
+    const navLinks = document.querySelector('.nav-links');
 
+    // Toggle mobile menu
     if (mobileMenuToggle) {
-        mobileMenuToggle.addEventListener('click', function() {
+        mobileMenuToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
             this.classList.toggle('active');
             mainNav.classList.toggle('active');
         });
     }
 
     // Handle services dropdown on mobile
-    if (servicesDropdown && window.innerWidth <= 768) {
+    if (servicesDropdown) {
         servicesDropdown.addEventListener('click', function(e) {
-            this.classList.toggle('active');
-            const dropdownContent = this.querySelector('.dropdown-content');
-            if (dropdownContent) {
-                dropdownContent.style.display = this.classList.contains('active') ? 'block' : 'none';
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                e.stopPropagation();
+                this.classList.toggle('active');
             }
         });
     }
 
     // Close menu when clicking outside
     document.addEventListener('click', function(e) {
-        if (!e.target.closest('.mobile-menu-toggle') && 
-            !e.target.closest('.main-nav')) {
+        if (!e.target.closest('.main-nav') && !e.target.closest('.mobile-menu-toggle')) {
+            if (mainNav.classList.contains('active')) {
+                mainNav.classList.remove('active');
+                mobileMenuToggle.classList.remove('active');
+            }
+            if (servicesDropdown && servicesDropdown.classList.contains('active')) {
+                servicesDropdown.classList.remove('active');
+            }
+        }
+    });
+
+    // Prevent closing when clicking inside nav
+    mainNav.addEventListener('click', function(e) {
+        e.stopPropagation();
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
             mainNav.classList.remove('active');
             mobileMenuToggle.classList.remove('active');
+            if (servicesDropdown) {
+                servicesDropdown.classList.remove('active');
+            }
         }
     });
 
