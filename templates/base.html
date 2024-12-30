@@ -50,48 +50,74 @@
         display: flex;
         gap: 1rem;
         margin-top: 1rem;
-    }
+        }
 
-    .social-links a {
-        color: white;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        background: rgba(255, 255, 255, 0.1);
-    }
+        .social-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+        }
 
-    .social-links a:hover {
-        background: rgba(255, 255, 255, 0.2);
-        transform: translateY(-2px);
-    }
+        .social-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
 
-    .footer-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        padding: 2rem;
-        gap: 2rem;
-    }
-
-    .footer-section {
-        flex: 1;
-        margin-left: 2rem;
-    }
-
-    .footer-section:last-child {
-        text-align: left;
-    }
-
-    @media (max-width: 768px) {
         .footer-content {
-            flex-direction: column;
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 2rem;
+            gap: 2rem;
         }
-        
+
+        .footer-section {
+            flex: 1;
+            margin-left: 2rem;
+        }
+
         .footer-section:last-child {
-            text-align: center;
+            text-align: left;
         }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        
+            .footer-section:last-child {
+                text-align: center;
+            }
+        }
+
+        .dropdown-content {
+            background: linear-gradient(
+            rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.7)
+        ),
+        url('../static/images/glass.jpg');
+        border-radius: 10px;
+        padding: 1rem;
+        
+        }
+
+    .dropdown-content li {
+        margin: 0.5rem 0;
+    }
+
+    .dropdown-content a {
+        color: white;
+        padding: 0.5rem 1rem;
+        display: block;
+        transition: all 0.3s ease;
+    }
+
+    .dropdown-content a:hover {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
     }
     </style>
     {% block extra_css %}{% endblock %}
