@@ -529,10 +529,23 @@ table {
         background: rgba(0, 0, 0, 0.95);
         padding: 1rem;
         overflow-y: auto;
+        transition: all 0.3s ease-in-out;
     }
 
     .main-nav.active {
         display: block;
+        animation: slideIn 0.3s ease-in-out;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     .nav-links {
