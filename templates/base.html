@@ -152,11 +152,17 @@
                 <img src="{{ url_for('static', filename='images/Fourve_logo.png') }}" 
                     alt="Fourve Studio Logo" 
                     class="logo" 
-                    style="width: 100px !important; height: 150px !important;"
+                    style="width: 80px !important; height: auto !important;"
                 >
             </a>
         </div>
         
+        <button class="mobile-menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
         <nav class="main-nav">            
             <ul class="nav-links">
                 <li><a href="{{ url_for('home') }}" {% if active_page == 'home' %}class="active"{% endif %}>Home</a></li>
