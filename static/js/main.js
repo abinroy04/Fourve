@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Mobile menu functionality
     const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
     const mainNav = document.querySelector('.main-nav');
     const servicesDropdown = document.querySelector('.services-dropdown');
-    const navLinks = document.querySelector('.nav-links');
+    const servicesDropdownContent = servicesDropdown?.querySelector('.dropdown-content');
 
     // Toggle mobile menu
     if (mobileMenuToggle && mainNav) {
@@ -11,6 +10,10 @@ document.addEventListener('DOMContentLoaded', function() {
             e.stopPropagation();
             this.classList.toggle('active');
             mainNav.classList.toggle('active');
+            
+            // Toggle aria-expanded
+            const isExpanded = this.classList.contains('active');
+            this.setAttribute('aria-expanded', isExpanded);
         });
     }
 
@@ -18,21 +21,23 @@ document.addEventListener('DOMContentLoaded', function() {
     if (servicesDropdown) {
         servicesDropdown.addEventListener('click', function(e) {
             if (window.innerWidth <= 768) {
-                e.preventDefault();
                 e.stopPropagation();
                 this.classList.toggle('active');
+                if (servicesDropdownContent) {
+                    servicesDropdownContent.style.display = 
+                        this.classList.contains('active') ? 'block' : 'none';
+                }
             }
         });
     }
 
     // Close menu when clicking outside
     document.addEventListener('click', function(e) {
-        if (!e.target.closest('.main-nav') && !e.target.closest('.mobile-menu-toggle')) {
-            mainNav.classList.remove('active');
-            mobileMenuToggle.classList.remove('active');
-            if (servicesDropdown) {
-                servicesDropdown.classList.remove('active');
-            }
+        if (!e.target.closest('.main-nav') && 
+            !e.target.closest('.mobile-menu-toggle')) {
+            if (mainNav) mainNav.classList.remove('active');
+            if (mobileMenuToggle) mobileMenuToggle.classList.remove('active');
+            if (servicesDropdown) servicesDropdown.classList.remove('active');
         }
     });
 
