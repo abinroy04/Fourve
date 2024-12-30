@@ -190,7 +190,7 @@ def join_us():
             'title': 'Digital Marketing Specialist',
             'description': 'Looking for an experienced digital marketing professional.',
             'requirements': [
-                '2+ years experience',
+                'Experienced or freshers'
                 'Social media expertise',
                 'Content creation skills'
             ],
@@ -200,9 +200,29 @@ def join_us():
             'title': 'Video Editor',
             'description': 'Seeking creative video editor for digital content.',
             'requirements': [
-                'Proficiency in Adobe Premiere Pro',
+                'Proficiency in Adobe Premiere Pro/After Effects',
                 'Portfolio of work',
                 'Understanding of social media formats'
+            ],
+            'location': 'Remote / Kerala'
+        },
+        {
+            'title': 'Web Developer',
+            'description': 'Looking for a web developer to join our team.',
+            'requirements': [
+                'Experience with HTML, CSS, JavaScript or other full stack technologies',
+                'Portfolio of work',
+                'Understanding of social media formats'
+            ],
+            'location': 'Remote / Kerala'
+        },
+        {
+            'title': 'E-Sports Manager',
+            'description': 'Seeking an E-Sports manager to join our team.',
+            'requirements': [
+                'Experience in E-Sports management',
+                'Stable internet connection',
+                'Understanding of game formats and tournaments'
             ],
             'location': 'Remote / Kerala'
         }
