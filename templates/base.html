@@ -98,7 +98,7 @@
             background: linear-gradient(
             rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.7)
         ),
-        url('../static/images/glass.jpg');
+        url('../static/images/glass.jpeg');
         border-radius: 10px;
         padding: 1rem;
         
@@ -177,6 +177,12 @@
                 >
             </a>
         </div>
+
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
         
         <nav class="main-nav">            
             <ul class="nav-links">
@@ -195,12 +201,6 @@
                 <li><a href="{{ url_for('join_us') }}" {% if active_page == 'join_us' %}class="active"{% endif %}>Join Us</a></li>
             </ul>
         </nav>
-
-        <button class="mobile-menu-toggle" aria-label="Toggle menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
     </header>
 
     <main>
@@ -239,21 +239,20 @@
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-            const mainNav = document.querySelector('.main-nav');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            const nav = document.querySelector('.main-nav');
             const servicesDropdown = document.querySelector('.services-dropdown');
 
-            // Toggle mobile menu
-            mobileMenuToggle.addEventListener('click', function() {
+            toggle.addEventListener('click', function(e) {
+                e.stopPropagation();
                 this.classList.toggle('active');
-                mainNav.classList.toggle('active');
+                nav.classList.toggle('active');
             });
 
-            // Handle services dropdown on mobile
             if (servicesDropdown) {
                 servicesDropdown.addEventListener('click', function(e) {
                     if (window.innerWidth <= 768) {
-                        e.preventDefault();
+                        e.stopPropagation();
                         this.classList.toggle('active');
                     }
                 });
