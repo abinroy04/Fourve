@@ -480,36 +480,44 @@ table {
 }
 
 @media screen and (max-width: 768px) {
+    header {
+        justify-content: space-between;
+        padding: 1rem;
+        height: auto;
+        min-height: 60px;
+    }
+
     .mobile-menu-toggle {
         display: block;
-        position: absolute;
-        right: 20px;
-        top: 20px;
+        position: relative;
+        z-index: 1002;
     }
 
     .main-nav {
         display: none;
-        position: absolute;
+        position: fixed;
         top: 60px;
         left: 0;
         width: 100%;
-        background: #000000;
-        padding: 0;
+        height: calc(100vh - 60px);
+        background: rgba(0, 0, 0, 0.95);
+        padding: 1rem;
+        overflow-y: auto;
     }
 
     .main-nav.active {
-        display: block !important;
+        display: block;
     }
 
     .nav-links {
         flex-direction: column;
-        padding: 20px;
-        background: rgba(0, 0, 0, 0.95);
+        align-items: center;
+        gap: 1rem;
     }
 
     .nav-links li {
         width: 100%;
-        margin: 10px 0;
+        text-align: center;
     }
 
     .services-dropdown {
@@ -519,16 +527,25 @@ table {
     .services-dropdown .dropdown-content {
         position: static;
         width: 100%;
-        margin-top: 10px;
-        display: none;
         background: rgba(0, 0, 0, 0.8);
+        display: none;
+        margin-top: 0.5rem;
+        padding: 0.5rem 0;
     }
 
     .services-dropdown.active .dropdown-content {
         display: block;
     }
 
-    /* Animation for hamburger menu */
+    .mobile-menu-toggle span {
+        display: block;
+        width: 25px;
+        height: 2px;
+        background-color: white;
+        margin: 5px 0;
+        transition: 0.3s;
+    }
+
     .mobile-menu-toggle.active span:nth-child(1) {
         transform: rotate(-45deg) translate(-5px, 6px);
     }
