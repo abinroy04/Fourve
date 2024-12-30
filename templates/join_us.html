@@ -46,7 +46,8 @@
         border: none;
         cursor: pointer;
         transition: all 0.3s ease;
-        margin: 10px;
+        margin-left: 1px;
+        margin-top: 10px;
     }
 
     .apply-btn:hover {
@@ -63,7 +64,8 @@
         border-radius: 25px;
         cursor: pointer;
         transition: all 0.3s ease;
-        margin-left: 1rem;
+        margin-left: 1px;
+        margin-top: 10px;
     }
 
     .share-btn:hover {
@@ -93,6 +95,7 @@
         letter-spacing: 1px;
     }
 
+    
     .cancel-btn, .submit-btn {
         padding: 12px 30px;
         border-radius: 25px;
@@ -270,7 +273,12 @@
 
     }
 
-    
+    .info-card h4 {
+        margin: 1.5rem 0;
+        color: white;
+        font-size: 1.25rem;
+        font-weight: 500;
+    }
 </style>
 {% endblock %}
 
@@ -355,7 +363,7 @@
                
                 <div class="checkbox-container">
                     <input type="checkbox" id="terms" name="terms" required>
-                    <label for="terms">I agree to the terms and conditions</label>
+                    <label for="terms">I agree to share my information to Fourve Studio and Enterprises LLP</label>
                 </div>
                 <div class="form-actions">
                     <button type="button" class="cancel-btn" onclick="closeApplicationForm()">Cancel Application</button>
@@ -534,6 +542,22 @@
                 setTimeout(() => message.remove(), 500);
             });
         }, 5000);
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const generalApplyBtn = document.querySelector('.general-apply-btn');
+        const applicationForm = document.querySelector('#applicationForm');
+
+        if (generalApplyBtn && applicationForm) {
+            generalApplyBtn.addEventListener('click', function() {
+                applicationForm.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                // Show form if hidden
+                applicationForm.style.display = 'block';
+            });
+        }
     });
 </script>
 {% endblock %}
