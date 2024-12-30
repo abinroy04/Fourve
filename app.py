@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, g, send_from_directory, session
 import smtplib
+from flask_session import Session
+import shutil
 import os
 from dotenv import load_dotenv
 from email.mime.text import MIMEText
@@ -16,10 +18,16 @@ load_dotenv()
 
 # Session configuration
 app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_FILE_DIR'] = os.path.join(app.root_path, 'flask_session')
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=1)
 app.config['SESSION_COOKIE_SECURE'] = True
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+# Create session directory if it doesn't exist
+if not os.path.exists(app.config['SESSION_FILE_DIR']):
+    os.makedirs(app.config['SESSION_FILE_DIR'])
+
+Session(app)
 
 @app.before_request
 def before_request():
@@ -290,11 +298,11 @@ def admin_login():
     
     return render_template('admin_login.html')
 
-@app.route('/admin/logout')
-def admin_logout():
-    session.pop('is_admin', None)
-    flash('Successfully logged out', 'success')
-    return redirect(url_for('home'))
+@app.teardown_appcontext
+def cleanup(error):
+    if error:
+        clear_session_files()
+
 
 @app.route('/admin/dashboard')
 @admin_required
@@ -312,7 +320,26 @@ def admin_dashboard():
         print(f"Error listing files: {e}")
         flash("Error loading files from S3.", "error")
         return redirect(url_for('home'))
-    
+
+
+def clear_session_files():
+    session_dir = app.config['SESSION_FILE_DIR']
+    if os.path.exists(session_dir):
+        try:
+            for file in os.listdir(session_dir):
+                file_path = os.path.join(session_dir, file)
+                if os.path.isfile(file_path):
+                    os.unlink(file_path)
+        except Exception as e:
+            print(f"Error clearing session files: {e}")
+
+@app.route('/admin/logout')
+def admin_logout():
+    if session.get('is_admin'):
+        session.clear()
+        flash('Successfully logged out', 'success')
+    return redirect(url_for('home'))
+
 # Update the download_resume route with the decorator
 @app.route('/uploads/resumes/<filename>')
 @admin_required
