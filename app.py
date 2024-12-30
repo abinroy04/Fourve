@@ -3,7 +3,7 @@ import smtplib
 import os
 from dotenv import load_dotenv
 from email.mime.text import MIMEText
-from datetime import datetime
+from datetime import datetime, timedelta
 from werkzeug.utils import secure_filename
 from functools import wraps
 import boto3
@@ -14,31 +14,25 @@ app = Flask(__name__)
 # Load environment variables from .env file
 load_dotenv()
 
+# Session configuration
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=1)
+app.config['SESSION_COOKIE_SECURE'] = True
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+
+@app.before_request
+def before_request():
+    session.permanent = False  # Session will expire when browser closes
+    g.now = datetime.now()
+
 # Set secret key from environment variable
 app.secret_key = os.environ.get('SECRET_KEY')
 if not app.secret_key:
     raise ValueError("No SECRET_KEY set in environment variables")
 
-# Add these configurations after app initialization
 app.config['ADMIN_USERNAME'] = os.environ.get('ADMIN_USERNAME', 'admin')
 app.config['ADMIN_PASSWORD'] = os.environ.get('ADMIN_PASSWORD', 'admin123')
-
-#intialize s3 client
-s3 = boto3.client(
-    's3',
-    aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
-    aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'),
-    region_name=os.environ.get('AWS_REGION')
-)
-BUCKET_NAME = os.environ.get('AWS_BUCKET_NAME')
-
-UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads/resumes')
-ALLOWED_EXTENSIONS = {'pdf', 'doc', 'docx'}
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
 
 @app.before_request
 def add_now():
@@ -139,6 +133,22 @@ def contact():
 
     return render_template('contact.html', active_page='contact')
 
+
+#intialize AWS S3 client
+s3 = boto3.client(
+    's3',
+    aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
+    aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'),
+    region_name=os.environ.get('AWS_REGION')
+)
+BUCKET_NAME = os.environ.get('AWS_BUCKET_NAME')
+
+ALLOWED_EXTENSIONS = {'pdf', 'doc', 'docx'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
 def upload_to_s3(file, bucket_name, folder_name, acl="private"):
     try:
         s3 = boto3.client(
@@ -185,14 +195,6 @@ def join_us():
                 'Proficiency in Adobe Premiere Pro',
                 'Portfolio of work',
                 'Understanding of social media formats'
-            ],
-            'location': 'Remote / Kerala'
-        },
-        {'title': 'Web Development Team Lead',
-            'description': 'Looking for an experienced professional to lead our web development team.',
-            'requirements': [
-                '2+ years experience',
-                'Full stack development'
             ],
             'location': 'Remote / Kerala'
         }
@@ -258,12 +260,6 @@ def join_us():
         return redirect(url_for('join_us'))
 
     return render_template('join_us.html', active_page='join_us', job_listings=job_listings)
-
-@app.route('/test_env', methods=['GET'])
-def test_env():
-    email_id = os.environ.get('EMAIL_ID', 'Not Set')
-    app_password = os.environ.get('APP_PASSWORD', 'Not Set')
-    return f"EMAIL_ID: {email_id}, APP_PASSWORD: {app_password}"
 
 
 def is_authorized():
@@ -359,4 +355,3 @@ def delete_resume(filename):
 
 if __name__ == '__main__':
     app.run(debug=False)
-
