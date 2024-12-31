@@ -4,6 +4,27 @@
 
 {% block extra_css %}
 <style>
+    html, body {
+        overflow-x: hidden;
+        width: 100%;
+        position: relative;
+    }
+
+    .container {
+        animation: fadeIn 1s ease-out;
+        overflow: hidden;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
     .broadcasting-hero {
         background: linear-gradient(rgb(65, 105, 225, 0.8), rgba(0, 0, 0, 0.8));
         background-size: cover;
@@ -70,7 +91,7 @@
 
 {% block content %}
 <div class="broadcasting-hero">
-    <h1>Broadcasting Excellence</h1>
+    <h1>Fourve Broadcasting</h1>
     <h2>Taking Your Message to the World</h2>
 </div>
 
