@@ -59,10 +59,10 @@ def team():
             'name': 'Alen T Koshy',
             'position': 'Co-Founder',
             'description': 'Creative professional.',
-            'image': 'images/team/CEO_founder.jpeg'
+            'image': 'images/team/Alen_T_Koshy.jpeg'
         },
         {
-            'name': 'Danny Joseph Augustine',
+            'name': 'Danie Joseph Augustine',
             'position': 'Co-Founder',
             'description': 'Creative professional.',
             'image': 'images/team/Danny.jpeg'
@@ -74,10 +74,10 @@ def team():
             'image': 'images/team/Shalom.jpeg'
         },
         {
-            'name': 'Cyril Luke Aneesh',
+            'name': 'Cyril Luke Anish',
             'position': 'Co-Founder',
             'description': 'Creative professional.',
-            'image': 'images/team/Cyril.jpg'
+            'image': 'images/team/Cyril.jpeg'
         }
     ]
     return render_template('team.html', active_page='team', team_members=team_members)
