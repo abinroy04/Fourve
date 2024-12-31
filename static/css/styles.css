@@ -479,6 +479,8 @@ table {
     transition: 0.3s;
 }
 
+/*
+
 @media screen and (max-width: 768px) {
     header {
         justify-content: space-between;
@@ -488,8 +490,8 @@ table {
         position: fixed;
         z-index: 1000;
         background-color: rgba(0, 0, 0, 0.95); /* Make header background more solid */
-    }
-
+    
+/*
     .mobile-menu-toggle {
         display: flex;
         flex-direction: column;
@@ -521,18 +523,19 @@ table {
     .mobile-menu-toggle.active span:nth-child(3) {
         transform: translateY(-9px) rotate(-45deg);
     }
-
+*/
+/*
     .main-nav {
         display: none;
-        position: absolute; /* Change from fixed to absolute */
-        top: 100%; /* Position it right below the header */
+        position: absolute; 
+        top: 100%; 
         left: 0;
         width: 100%;
         background: rgba(0, 0, 0, 0.95);
         padding: 1rem;
         overflow-y: auto;
         transition: all 0.3s ease-in-out;
-        max-height: calc(100vh - 60px); /* Limit maximum height */
+        max-height: calc(100vh - 60px); 
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
@@ -540,7 +543,6 @@ table {
         display: block;
     }
 
-    /* Ensure main content remains visible */
     main {
         position: relative;
         z-index: 1;
@@ -601,3 +603,4 @@ table {
         animation: fadeIn 0.3s ease;
     }
 }
+*/
