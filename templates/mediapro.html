@@ -4,6 +4,27 @@
 
 {% block extra_css %}
 <style>
+    html, body {
+        overflow-x: hidden;
+        width: 100%;
+        position: relative;
+    }
+
+    .container {
+        animation: fadeIn 1s ease-out;
+        overflow: hidden;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
     .mediapro-hero {
         background: linear-gradient(rgba(139, 0, 0, 0.8), rgba(0, 0, 0, 0.8));
         background-size: cover;
@@ -79,8 +100,9 @@
 
 {% block content %}
 <div class="mediapro-hero">
-    <h1>Visual Storytelling at Its Best</h1>
+    <h1>Fourve Dimensions</h1>
     <h2>Media Production Redefined</h2>
+    <h3>Visual Storytelling at Its Best</h3>
 </div>
 
 <section class="content-section">
