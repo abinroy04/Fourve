@@ -87,7 +87,7 @@
 
     .services-overview h2 {
         text-align: center;
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
         animation: fadeIn 1s ease-out 1.5s;
         animation-fill-mode: both;
     }
@@ -122,14 +122,131 @@
         box-shadow: 0 0 15px rgba(65, 105, 225, 0.5);
         background: linear-gradient(45deg, rgb(110, 139, 227), rgb(65, 105, 225));
     }
+    /* Portfolio Section */
+    .portfolio-section {
+        padding: 4rem 2rem;
+        background: rgba(0, 0, 0, 0.8);
+    }
 
+    .portfolio-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .portfolio-category {
+        margin-bottom: 3rem;
+    }
+
+    .portfolio-category h3 {
+        color: white;
+        margin-bottom: 1.5rem;
+        font-size: 1.8rem;
+    }
+
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+    }
+
+    .video-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+    }
+
+    .section-title {
+        text-align: center;
+        color: white;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+    }
+
+    /* Fade-in effect */
+    .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeIn 1s ease-out;
+        animation-fill-mode: both;
+    }
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+
+    /*Video Container*/
+    .portfolio-category {
+        max-width: 800px;
+        margin: 0 auto 3rem auto;
+    }
+
+    .video-container{
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+        margin: 0 auto;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        box-shadow: 0 4px 30px rgba(247, 239, 239, 0.303);
+    }
+
+    /* Live Stream Video */
+    .portfolio-category:first-child .video-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    /* Grid Videos */
+    .video-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .video-grid .video-container {
+        position: relative;
+        padding-bottom: 100%;
+        height: 0;
+        width: 100%;
+    }
+
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+    }
 </style>
+
 {% endblock %}
 
 {% block content %}
 <section class="hero">
     <div class="hero-content">
-        <h1>We are a digital services company dedicated to providing services across India.</h1>
+        <h1>Fourve Studio and Enterprises</h1>
         <p>Transforming ideas into digital excellence</p>
         <a href="{{ url_for('contact') }}" class="cta-button">Get Started</a>
     </div>
@@ -164,6 +281,51 @@
         </div>
     </div>
 </section>
+<section class="portfolio-section fade-in">
+    <h2 class="section-title">Our Portfolio</h2>
+    
+    <div class="portfolio-container">
+        <div class="portfolio-category">
+            <h3>Live Streamed Content</h3>
+            <div class="video-container">
+                <iframe width="560" height="315" 
+                    src="https://www.youtube.com/embed/iOgc_cjoILk" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+
+        <div class="portfolio-category">
+            <h3>Videography Content</h3>
+            <div class="video-grid">
+                <div class="video-container">
+                    <iframe src="https://www.instagram.com/reel/C_YYqc-SeI8/embed" 
+                        frameborder="0" 
+                        scrolling="no" 
+                        allowtransparency="true">
+                    </iframe>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.instagram.com/reel/C6y0NHYSLVQ/embed" 
+                        frameborder="0" 
+                        scrolling="no" 
+                        allowtransparency="true">
+                    </iframe>
+                </div>
+                <div class="video-container">
+                    <iframe width="560" height="315" 
+                        src="https://www.youtube.com/embed/YCQVhdto_ms" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <script>
     const observer = new IntersectionObserver((entries) => {
@@ -179,5 +341,7 @@
     document.querySelectorAll('.service-box').forEach((box) => {
         observer.observe(box);
     });
+
+    
 </script>
 {% endblock %}
