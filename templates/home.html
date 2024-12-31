@@ -174,18 +174,6 @@
         margin-bottom: 3rem;
     }
 
-    /* Fade-in effect */
-    .fade-in {
-        opacity: 0;
-        transform: translateY(20px);
-        animation: fadeIn 1s ease-out;
-        animation-fill-mode: both;
-    }
-    .fade-in.visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
 
     /*Video Container*/
     .portfolio-category {
@@ -239,6 +227,31 @@
         height: 100%;
         border-radius: 10px;
     }
+    .down-arrow {
+        display: block;
+        text-align: center;
+        margin-bottom: 2rem;
+        opacity: 0;
+        animation: fadeIn 2s ease-out forwards 2s, bounce 2s infinite 3s;
+        animation-fill-mode: both;
+    }
+
+    .down-arrow img {
+        width: 50px;
+        height: auto;
+    }
+
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {
+            transform: translateY(0);
+        }
+        40% {
+            transform: translateY(-15px);
+        }
+        60% {
+            transform: translateY(-7px);
+        }
+    }
 </style>
 
 {% endblock %}
@@ -253,7 +266,10 @@
 </section>
 
 <section class="services-overview">
-    <h2 style="text-align: center; margin-bottom: 2rem;">Our Services</h2>
+    <h2 style="text-align: center; margin-bottom: 1rem;">Our Services</h2>
+    <div class="down-arrow">
+        <img src="{{ url_for('static', filename='images/down-arrow.png') }}" alt="Scroll Down">
+    </div>
     <div class="services-grid">
         <div class="service-box">
             <img src="{{ url_for('static', filename='images/live.jpg') }}" alt="Live Streaming">
