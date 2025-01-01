@@ -4,281 +4,373 @@
 
 {% block extra_css %}
 <style>
-    main {
-        background: linear-gradient(rgba(65, 105, 225, 0.8), rgba(0, 0, 0, 0.9));
-        min-height: 100px;
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        position: relative;
-        z-index: 0;
-    }
+   main {
+    background: linear-gradient(rgba(65, 105, 225, 0.8), rgba(0, 0, 0, 0.9));
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    z-index: 0;
+}
 
-    .careers-header {   
+.careers-header {   
     text-align: center;
-        margin-bottom: 2rem;
-        font-size: 1.5 rem;
-        color: white;
-        animation: fadeIn 1s ease-out;
-    }
+    margin: 2rem auto;
+    padding: 0 1rem;
+    max-width: 800px;
+    color: white;
+    animation: fadeIn 1s ease-out;
+}
 
+.careers-header h2 {
+    font-size: clamp(2rem, 5vw, 6rem);
+    margin-bottom: 1rem;
+    padding-top: 3rem;
+}
+
+.careers-intro {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+}
+
+.careers-section {
+    position: relative;
+    z-index: 1;
+    padding: 2rem 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.jobs-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.job-card {
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(8px);
+    border-radius: 15px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    animation: fadeIn 1s ease-out;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.job-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 25px rgba(46, 204, 113, 0.3);
+}
+
+.job-card h3 {
+    color: white;
+    margin-bottom: 1rem;
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+}
+
+.job-description {
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    font-size: clamp(0.875rem, 1.5vw, 1rem);
+}
+
+.requirements-list {
+    color: #ffffff;
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.job-meta {
+    color: #ffffff;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
+.job-actions {
+    margin-top: auto;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.apply-btn, .share-btn {
+    width: 100%;
+    max-width: 200px;
+    text-align: center;
+    padding: 0.75rem 1.5rem;
+    font-size: clamp(0.875rem, 1.5vw, 1rem);
+    background: linear-gradient(45deg, #4169e1, #6e8be3);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.apply-btn:hover, .share-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(65, 105, 225, 0.3);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    overflow-y: auto;
+    padding-top: 120px; /* Add space below header */
+}
+
+.modal-content {
+    width: 90%;
+    max-width: 500px; /* Reduced from 600px */
+    margin: 0 auto;
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 15px;
+    position: relative;
+    color: white;
+    max-height: 80vh; /* Limit height */
+    overflow-y: auto; /* Enable scrolling if content is too long */
+}
+.modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+.close-modal {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.cancel-btn, .submit-btn {
+    width: 100%;
+    max-width: 200px;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.submit-btn {
+    background: linear-gradient(45deg, #4169e1, #6e8be3);
+    color: white;
+}
+
+.cancel-btn {
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+    color: white;
+}
+
+.submit-btn:hover, .cancel-btn:hover {
+    transform: translateY(-2px);
+}
+
+.flash-messages {
+    position: fixed;
+    top: 120px;
+    right: 20px;
+    z-index: 9999;
+    width: 90%;
+    max-width: 300px;
+}
+
+.flash-message {
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    color: white;
+    animation: slideIn 0.5s ease-out;
+}
+
+.flash-message.success {
+    background-color: rgba(46, 204, 113, 0.9);
+}
+
+.flash-message.error {
+    background-color: rgba(231, 76, 60, 0.9);
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-top: 0.25rem;
+}
+
+.general-application {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: white;
+}
+
+.general-apply-btn {
+    width: 100%;
+    max-width: 300px;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(45deg, #4169e1, #6e8be3);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.careers-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding: 1.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.info-card {
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(8px);
+    border-radius: 15px;
+    padding: 1.5rem;
+    color: white;
+}
+
+.info-card h4 {
+    margin-bottom: 1rem;
+    font-size: clamp(1.1rem, 1.5vw, 1.25rem);
+}
+
+.info-card ul {
+    padding-left: 1.5rem;
+}
+
+.loading {
+    display: none;
+    text-align: center;
+    padding: 20px;
+    color: white;
+}
+
+.loading:after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 2px solid #3498db;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
     .careers-section {
-        position: relative;
-        z-index: 1;
-        padding: 2rem;
+        padding: 1rem;
     }
-
-    .careers-section h2 {
-        padding-top: 5rem;
-        margin-bottom: 1.5rem;
-        text-align: center;
-        color: white;
-        font-size: 6rem;
+    
+    .flash-messages {
+        right: 10px;
+        left: 10px;
+        max-width: none;
     }
-
-    .apply-btn {
-        display: inline-block;
-        background: linear-gradient(45deg, #4169e1, #6e8be3);
-        color: white;
-        text-decoration: none;
-        padding: 12px 30px;
-        border-radius: 25px;
-        border: none;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        margin-left: 1px;
-        margin-top: 10px;
+    
+    
+    .modal {
+        padding-top: 80px; /* Smaller padding on mobile */
     }
-
-    .apply-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(65, 105, 225, 0.3);
+    
+    .modal-content {
+        width: 95%;
+        margin: 0 auto;
     }
+}
 
-    .share-btn {
-        display: inline-block;
-        background: linear-gradient(45deg, #4169e1, #6e8be3);
-        color: white;
-        border: none;
-        padding: 12px 30px;
-        border-radius: 25px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        margin-left: 1px;
-        margin-top: 10px;
+@media (max-width: 480px) {
+    .job-actions {
+        flex-direction: column;
     }
-
-    .share-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(65, 105, 225, 0.3);
-        background: linear-gradient(45deg, #6e8be3, #4169e1);
+    
+    .apply-btn, .share-btn, .general-apply-btn {
+        max-width: none;
     }
-
-    .button-group {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        margin-top: 2rem;
+    
+    .form-actions {
+        flex-direction: column;
     }
-
-
-
-    .form-button {
-        display: inline-block;
-        padding: 12px 30px;
-        border-radius: 25px;
-        border: none;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-
     
     .cancel-btn, .submit-btn {
-        padding: 12px 30px;
-        border-radius: 25px;
-        border: none;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 2rem;
+        max-width: none;
     }
-
-    .submit-btn {
-        background: linear-gradient(45deg, #4169e1, #6e8be3);
-        color: white;
-        justify-content: flex-end;
-        margin-left: 100px;
-    }
-
-    .cancel-btn {
-        background: linear-gradient(45deg, #e74c3c, #c0392b);
-        color: white;
-        margin-left: 450px;
-    }
-
-    .submit-btn:hover, .cancel-btn:hover {
-        transform: translateY(-2px);
-    }
-
-    .submit-btn:hover {
-        box-shadow: 0 5px 15px rgba(65, 105, 225, 0.3);
-    }
-
-    .cancel-btn:hover {
-        box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
-    }
-
-    /*Job card styles*/
-    .jobs-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-        padding: 2rem;
-    }
-
-    .job-card {
-        background: rgba(0, 0, 0, 0.2);
-        backdrop-filter: blur(8px);
-        border-radius: 15px;
-        padding: 2rem;
-        transition: all 0.3s ease;
-        animation: fadeIn 1s ease-out;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .job-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 0 25px rgba(46, 204, 113, 0.3);
-    }
-
-    .job-card h3 {
-        color: white;
-        margin-bottom: 1rem;
-        font-size: 1.5rem;
-    }
-
-    .job-description {
-        color: #ffffff;
-        margin-bottom: 1.5rem;
-    }
-
-    .requirements-list {
-        color: #ffffff;
-        padding-left: 1.5rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .job-meta {
-        color: #ffffff;
-        font-size: 0.9rem;
-        margin-top: 1rem;
-    }
-
-    .flash-messages {
-        position: fixed;
-        top: 120px;
-        right: 20px;
-        z-index: 9999;
-        max-width: 300px;
-    }
-
-    .flash-message {
-        padding: 15px;
-        margin-bottom: 10px;
-        border-radius: 5px;
-        color: rgb(246, 141, 141);
-        animation: slideIn 0.5s ease-out;
-    }
-
-    .flash-message.success {
-        background-color: rgba(46, 204, 113, 0.9);
-    }
-
-    .flash-message.error {
-        background-color: rgba(231, 76, 60, 0.9);
-    }
-
-    @keyframes slideIn {
-        from { transform: translateX(100%); }
-        to { transform: translateX(0); }
-    }
-
-    .form-error {
-        color: #e74c3c;
-        font-size: 0.9em;
-        margin-top: 5px;
-    }
-
-    .loading {
-        display: none;
-        text-align: center;
-        padding: 20px;
-    }
-
-    .loading:after {
-        content: '';
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        border: 2px solid #f3f3f3;
-        border-radius: 50%;
-        border-top: 2px solid #3498db;
-        animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-
-    .checkbox-container {
-        display: flex;
-        align-items: left;
-        gap: 0.5rem;
-        margin: 1rem 0;
-    }
-
-    .checkbox-container input[type="checkbox"] {
-        margin: 0;
-    }
-
-    .checkbox-container label {
-        margin: 0;
-        color: white;
-    }
-    .general-apply-btn {
-        display: inline-block;
-        background: linear-gradient(45deg, #4169e1, #6e8be3);
-        color: white;
-        border: none;
-        padding: 12px 30px;
-        border-radius: 25px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-top: 1rem;
-        margin-bottom: 2rem;
-    }
-
-    .general-apply-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(65, 105, 225, 0.3);
-
-    }
-
-    .info-card h4 {
-        margin: 1.5rem 0;
-        color: white;
-        font-size: 1.25rem;
-        font-weight: 500;
-    }
+}
 </style>
 {% endblock %}
 
