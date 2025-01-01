@@ -22,34 +22,11 @@
             }
         }
 
-        header {
-            position: fixed;
-            width: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            background-color: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            height: 100px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        }
-    
-        main {
-            margin-top: 10px;
-            position: relative;
-            z-index: 1;
-            animation: fadeIn 1s ease-out;
-        }
         .social-links {
         display: flex;
         gap: 1rem;
         margin-top: 1rem;
+        padding-right: 1rem;
         }
 
         .social-links a {
@@ -70,8 +47,12 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            padding: 2rem;
             gap: 2rem;
+        }
+
+        .quick-section {
+            flex: 1;
+            margin-left: 5rem;
         }
 
         .footer-section {
@@ -82,6 +63,11 @@
         .footer-section:last-child {
             text-align: left;
         }
+        
+        .footer-section h3 {
+            padding-right: 10px;
+        }
+
 
         @media (max-width: 768px) {
             .footer-content {
@@ -94,96 +80,6 @@
             }
         }
 
-        .dropdown-content {
-            background: linear-gradient(
-            rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.7)
-        ),
-        url('../static/images/glass.jpeg');
-        border-radius: 10px;
-        padding: 1rem;
-        
-        }
-
-    .dropdown-content li {
-        margin: 0.5rem 0;
-    }
-
-    .dropdown-content a {
-        color: white;
-        padding: 0.5rem 1rem;
-        display: block;
-        transition: all 0.3s ease;
-    }
-
-    .dropdown-content a:hover {
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 8px;
-    }
-    .nav-links a, .services-dropdown span {
-        padding: 0.5rem 1rem;
-        color: white;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        display: inline-block;
-    }
-
-    .nav-links li {
-        display: flex;
-        align-items: center;
-    }
-
-    .services-dropdown {
-        position: relative;
-        display: inline-flex;
-        align-items: center;
-    }
-
-    .services-dropdown span {
-        cursor: pointer;
-    }
-    @media screen and (max-width: 768px) {
-        header {
-            height: auto;
-            padding: 0.5rem;
-        }
-        
-        .logo-container {
-            padding: 0.5rem;
-        }
-        
-        .logo {
-            width: 80px !important;
-            height: auto !important;
-        }
-
-        .footer-content {
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: 1rem;
-        }
-
-        main {
-            margin-top: 70px; /* Adjust based on your header height */
-        }
-
-        .mobile-menu-toggle {
-            display: block;
-        }
-
-        .main-nav {
-            background: rgba(255, 0, 0, 0.95);
-        }
-
-        .nav-links {
-            margin-top: 0;
-        }
-
-        .nav-links li {
-            opacity: 1;
-            transform: none;
-        }
-    }
     </style>
     {% block extra_css %}{% endblock %}
 </head>
@@ -235,7 +131,7 @@
                 <p>Email: contact@fourve.in</p>
                 <p>Phone: +91 80869 59419</p>
             </div>
-            <div class="footer-section">
+            <div class="social-section">
                 <h3>Follow Us</h3>
                 <div class="social-links">
                     <a href="https://www.facebook.com/fourvestudio" target="_blank" rel="noopener noreferrer">Facebook</a>
@@ -244,7 +140,7 @@
                     <a href="https://www.linkedin.com/company/fourvestudio" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             </div>
             </div>
-            <div class="footer-section">
+            <div class="quick-section">
                 <h3>Quick Links</h3>
                 <ul>
                     <li><a href="{{ url_for('contact') }}">Contact</a></li>
