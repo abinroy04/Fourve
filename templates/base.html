@@ -104,7 +104,7 @@
         <nav class="main-nav" id="main-nav">            
             <ul class="nav-links">
                 <li><a href="{{ url_for('home') }}" {% if active_page == 'home' %}class="active"{% endif %}>Home</a></li>
-                <li><a href="{{ url_for('team') }}" {% if active_page == 'team' %}class="active"{% endif %}>Team</a></li>
+                <li><a href="{{ url_for('team') }}" {% if active_page == 'team' %}class="active"{% endif %}>About Us</a></li>
                 <li class="services-dropdown">
                     <span {% if active_page in ['broadcasting', 'mediapro', 'digimark', 'eventmgmt'] %}class="active"{% endif %}>Services</span>
                     <ul class="dropdown-content">
@@ -115,6 +115,10 @@
                     </ul>
                 </li>
                 <li><a href="{{ url_for('contact') }}" {% if active_page == 'contact' %}class="active"{% endif %}>Contact Us</a></li>
+                <li class="nav-item">
+                    <a class="nav-link {% if active_page == 'esports' %}active{% endif %}" href="{{ url_for('esports') }}">E-Sports</a>
+                </li>
+                {% block extra_nav_items %}{% endblock %}
                 <li><a href="{{ url_for('join_us') }}" {% if active_page == 'join_us' %}class="active"{% endif %}>Join Us</a></li>
             </ul>
         </nav>
