@@ -1,5 +1,0 @@
-User-agent: *
-Disallow: /admin_dashboard
-Disallow: /admin_login
-
-Sitemap: https://fourve.in/sitemap.xml
