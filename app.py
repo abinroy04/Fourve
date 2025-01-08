@@ -42,6 +42,10 @@ if not app.secret_key:
 app.config['ADMIN_USERNAME'] = os.environ.get('ADMIN_USERNAME', 'admin')
 app.config['ADMIN_PASSWORD'] = os.environ.get('ADMIN_PASSWORD', 'admin123')
 
+@app.route('/sitemap.xml')
+def serve_sitemap():
+    return send_from_directory('static', 'sitemap.xml')
+    
 @app.before_request
 def add_now():
     from datetime import datetime
