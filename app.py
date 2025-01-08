@@ -45,7 +45,11 @@ app.config['ADMIN_PASSWORD'] = os.environ.get('ADMIN_PASSWORD', 'admin123')
 @app.route('/sitemap.xml')
 def serve_sitemap():
     return send_from_directory('static', 'sitemap.xml')
-    
+
+@app.route('/robots.txt')
+def serve_robots():
+    return send_from_directory('static', 'robots.txt')
+
 @app.before_request
 def add_now():
     from datetime import datetime
