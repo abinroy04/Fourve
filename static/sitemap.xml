@@ -47,6 +47,11 @@
   <lastmod>2025-01-08T14:37:41+00:00</lastmod>
   <priority>0.80</priority>
 </url>
-
+<url>
+    <loc>http://fourve.in</loc>
+    <image:image>
+        <image:loc>http://fourve.in/static/images/Fourve_logo.png</image:loc>
+    </image:image>
+</url>
 
 </urlset>
