@@ -1,164 +1,130 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>{% block title %}Fourve{% endblock %}</title>
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/favicon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon.png') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
-    <style>
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+{% extends "base.html" %}
 
-        .social-links {
-        display: flex;
-        gap: 1rem;
-        margin-top: 1rem;
-        padding-right: 1rem;
-        }
+{% block title %}Blog - Fourve Studio{% endblock %}
 
-        .social-links a {
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.1);
-        }
+{% block extra_css %}
+<style>
+    .hero {
+        background: linear-gradient(rgb(65, 105, 225, 0.8), rgba(0, 0, 0, 0.8));
+        background-size: cover;
+        animation: fadeIn 1s ease-out;
+        background-position: center;
+        padding: 100px 0;
+        text-align: center;
+        color: white;
+        margin-bottom: 2rem;
+    }
+    
+    .hero h1 {
+        background: var(--primary-color);
+        padding-top: 50px;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        font-weight: bold;
+    }
 
-        .social-links a:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
+    .blog-container {
+        max-width: 800px;
+        margin: 0 auto 40px;
+        padding: 0 20px;
+    }
 
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 2rem;
-        }
+    .blog-post {
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+        padding: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 1s ease-out;
+    }
 
-        .quick-section {
-            flex: 1;
-            margin-left: 5rem;
-        }
+    .blog-content {
+        line-height: 1.8;
+    }
 
-        .footer-section {
-            flex: 1;
-            margin-left: 2rem;
-        }
+    .blog-content h2 {
+        color: var(--secondary-color);
+        margin: 2rem 0 1rem;
+        font-size: 1.8rem;
+    }
 
-        .footer-section:last-child {
-            text-align: left;
+    .blog-content h3 {
+        color: var(--text-color);
+        margin: 1.5rem 0 1rem;
+        font-size: 1.4rem;
+    }
+
+    .blog-content p {
+        margin-bottom: 1.5rem;
+        color: var(--text-color);
+    }
+
+    .blog-content ul {
+        margin: 1rem 0 1.5rem 2rem;
+        color: var(--text-color);
+    }
+
+    .blog-content li {
+        margin-bottom: 0.5rem;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
         }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <h1>Fourve Blog</h1>
+        <p>Stay updated with our latest insights and news</p>
+    </div>
+</section>
+
+<div class="blog-container">
+    <article class="blog-post">
+        <h1>Discover the Best Live Streaming Services in Kerala with Fourve</h1>
         
-        .footer-section h3 {
-            padding-right: 10px;
-        }
+        <div class="blog-content">
+            <p>In the digital era, live streaming has revolutionized the way we connect and share moments. Whether it's a grand event, a personal ceremony, or a professional occasion, the demand for seamless and high-quality live streaming services is at an all-time high. Fourve, a leading video production company, stands out as the top choice for live streaming and broadcasting in Kerala.</p>
 
+            <h2>Why Choose Fourve for Live Streaming in Kerala?</h2>
+            <p>Professional Live Streaming Services At Fourve, we specialize in delivering professional live streaming services that cater to various events. From weddings to corporate meetings, our team ensures every moment is captured and streamed with precision and clarity.</p>
 
-        @media (max-width: 768px) {
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-            }
-        
-            .footer-section:last-child {
-                text-align: center;
-            }
-        }
+            <h3>Event Live and Broadcasting Team</h3>
+            <p>With a skilled and dedicated event live and broadcasting team, we make sure your event reaches your audience in real time without any technical glitches. Our team's expertise in handling state-of-the-art equipment ensures high-definition quality and smooth broadcasting.</p>
 
-    </style>
-    {% block extra_css %}{% endblock %}
-</head>
-<body>
-    <header>
-        <div class="logo-container">
-            <a href="{{ url_for('home') }}">
-                <img src="{{ url_for('static', filename='images/Fourve_logo.png') }}" 
-                    alt="Fourve Studio Logo" 
-                    class="logo" 
-                    style="width: 80px !important; height: auto !important;"
-                >
-            </a>
-        </div>
+            <h3>Funeral Live Streaming in Kerala</h3>
+            <p>In challenging times, connecting with loved ones who can't be physically present becomes essential. Fourve offers funeral live streaming services in Kerala, allowing family and friends to pay their respects and join virtually from anywhere in the world.</p>
 
-        <button class="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-        
-        <nav class="main-nav" id="main-nav">            
-            <ul class="nav-links">
-                <li><a href="{{ url_for('home') }}" {% if active_page == 'home' %}class="active"{% endif %}>Home</a></li>
-                <li><a href="{{ url_for('team') }}" {% if active_page == 'team' %}class="active"{% endif %}>About Us</a></li>
-                <li class="services-dropdown">
-                    <span {% if active_page in ['broadcasting', 'mediapro', 'digimark', 'eventmgmt'] %}class="active"{% endif %}>Services</span>
-                    <ul class="dropdown-content">
-                        <li><a href="{{ url_for('broadcasting') }}#live-streaming">Live Streaming</a></li>
-                        <li><a href="{{ url_for('mediapro') }}#media-production">Media Production</a></li>
-                        <li><a href="{{ url_for('digimark') }}#digital-marketing">Digital Marketing</a></li>
-                        <li><a href="{{ url_for('eventmgmt') }}#event-management">Event Management</a></li>
-                    </ul>
-                </li>
-                <li><a href="{{ url_for('contact') }}" {% if active_page == 'contact' %}class="active"{% endif %}>Contact Us</a></li>
-                <li class="nav-item">
-                    <a class="nav-link {% if active_page == 'esports' %}active{% endif %}" href="{{ url_for('esports') }}">E-Sports</a>
-                </li>
-                {% block extra_nav_items %}{% endblock %}
-                <li><a href="{{ url_for('join_us') }}" {% if active_page == 'join_us' %}class="active"{% endif %}>Join Us</a></li>
+            <h3>Customized Solutions for Every Occasion</h3>
+            <p>Every event is unique, and so are our solutions. Whether you need live streaming for a small gathering or a large-scale event, Fourve tailors its services to meet your specific requirements.</p>
+
+            <h2>Advanced Technology and Seamless Integration</h2>
+            <p>Our live streaming services are powered by cutting-edge technology, ensuring:</p>
+            <ul>
+                <li>High-quality audio and video output</li>
+                <li>Reliable internet connectivity for uninterrupted streaming</li>
+                <li>Multi-platform broadcasting to reach your audience on YouTube, Facebook, Zoom, and more</li>
+                <li>Advanced security features to ensure your stream's privacy and exclusivity</li>
             </ul>
-        </nav>
-    </header>
 
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+            <h2>How to Get Started with Fourve?</h2>
+            <p>Getting started is simple. Reach out to us to discuss your requirements. Our team will assist you in planning and executing a flawless live streaming experience. Whether you're looking for a live streaming broadcasting number for direct communication or a comprehensive solution, Fourve is here to assist.</p>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Contact Info</h3>
-                <p>Email: contact@fourve.in</p>
-                <p>Phone: +91 80869 59419</p>
-            </div>
-            <div class="social-section">
-                <h3>Follow Us</h3>
-                <div class="social-links">
-                    <a href="https://www.facebook.com/fourvestudio" target="_blank" rel="noopener noreferrer">Facebook</a>
-                    <a href="https://twitter.com/fourvestudio" target="_blank" rel="noopener noreferrer">Twitter</a>
-                    <a href="https://www.instagram.com/4ve.dn/" target="_blank" rel="noopener noreferrer">Instagram</a>
-                    <a href="https://www.linkedin.com/company/fourvestudio" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            </div>
-            </div>
-            <div class="quick-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
-                    <li><a href="{{ url_for('join_us') }}">Careers</a></li>
-                    <li><a href="{{ url_for('blog') }}">Blog</a></li>
-                </ul>
-            </div>
+            <h2>Why Kerala Trusts Fourve for Live Streaming</h2>
+            <p>With a growing clientele and a proven track record, Fourve is synonymous with excellence in live streaming services in Kerala. Our commitment to quality, attention to detail, and customer satisfaction make us the go-to team for all your live streaming needs.</p>
+
+            <p>Don't settle for anything less when it comes to sharing your moments with the world. Contact Fourve today and let us turn your event into a memorable live experience!</p>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; {{ g.now.year }} Fourve Studios and Enterprises LLP. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    {% block extra_js %}{% endblock %}
-</body>
-</html>
+    </article>
+</div>
+{% endblock %}
