@@ -408,5 +408,9 @@ def delete_resume(filename):
     
     return redirect(url_for('admin_dashboard'))
 
+@app.route('/blog')
+def blog():
+    return render_template('blog.html', active_page='blog')
+
 if __name__ == '__main__':
     app.run(debug=False)
