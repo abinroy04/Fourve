@@ -412,5 +412,9 @@ def delete_resume(filename):
 def blog():
     return render_template('blog.html', active_page='blog')
 
+@app.route('/secret_flag', methods=['GET', 'POST'])
+def secret_flag():
+    return render_template('secret_flag.html', active_page='secret_flag')
+
 if __name__ == '__main__':
     app.run(debug=False)
