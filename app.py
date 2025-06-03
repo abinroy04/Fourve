@@ -1,3 +1,5 @@
+# Main Flask application for Fourve Studio
+
 from flask import Flask, render_template, request, redirect, url_for, flash, g, send_from_directory, session
 import smtplib
 from flask_session import Session
