@@ -92,4 +92,8 @@ window.addEventListener('beforeunload', function() {
         method: 'POST',
         credentials: 'include'
     });
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> origin/master

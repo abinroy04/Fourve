@@ -38,7 +38,11 @@
     left: 0;
     width: 70%;
     height: calc(100vh - var(--mobile-header-height));
+<<<<<<< HEAD
     background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), 
+=======
+    background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(0, 0, 0, 0.6)), 
+>>>>>>> origin/master
         url('../images/glassflower.png');
     background-size: cover;
     background-position: center;
