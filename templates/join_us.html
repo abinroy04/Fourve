@@ -1,0 +1,655 @@
+{% extends "base.html" %}
+
+{% block title %}Fourve - Join Us{% endblock %}
+
+{% block extra_css %}
+<style>
+   main {
+    background: linear-gradient(rgba(65, 105, 225, 0.8), rgba(0, 0, 0, 0.9));
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    z-index: 0;
+}
+
+.careers-header {   
+    text-align: center;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    max-width: 800px;
+    color: white;
+    animation: fadeIn 1s ease-out;
+}
+
+.careers-header h2 {
+    font-size: clamp(2rem, 5vw, 6rem);
+    margin-bottom: 1rem;
+    padding-top: 3rem;
+}
+
+.careers-intro {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+}
+
+.careers-section {
+    position: relative;
+    z-index: 1;
+    padding: 2rem 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.jobs-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.job-card {
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(8px);
+    border-radius: 15px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    animation: fadeIn 1s ease-out;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.job-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 25px rgba(46, 204, 113, 0.3);
+}
+
+.job-card h3 {
+    color: white;
+    margin-bottom: 1rem;
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+}
+
+.job-description {
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    font-size: clamp(0.875rem, 1.5vw, 1rem);
+}
+
+.requirements-list {
+    color: #ffffff;
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.job-meta {
+    color: #ffffff;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
+.job-actions {
+    margin-top: auto;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.apply-btn, .share-btn {
+    width: 100%;
+    max-width: 200px;
+    text-align: center;
+    padding: 0.75rem 1.5rem;
+    font-size: clamp(0.875rem, 1.5vw, 1rem);
+    background: linear-gradient(45deg, #4169e1, #6e8be3);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.apply-btn:hover, .share-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(65, 105, 225, 0.3);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    overflow-y: auto;
+    padding-top: 120px; /* Add space below header */
+}
+
+.modal-content {
+    width: 90%;
+    max-width: 500px; /* Reduced from 600px */
+    margin: 0 auto;
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 15px;
+    position: relative;
+    color: white;
+    max-height: 80vh; /* Limit height */
+    overflow-y: auto; /* Enable scrolling if content is too long */
+}
+.modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+.close-modal {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.cancel-btn, .submit-btn {
+    width: 100%;
+    max-width: 200px;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.submit-btn {
+    background: linear-gradient(45deg, #4169e1, #6e8be3);
+    color: white;
+}
+
+.cancel-btn {
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+    color: white;
+}
+
+.submit-btn:hover, .cancel-btn:hover {
+    transform: translateY(-2px);
+}
+
+.flash-messages {
+    position: fixed;
+    top: 120px;
+    right: 20px;
+    z-index: 9999;
+    width: 90%;
+    max-width: 300px;
+}
+
+.flash-message {
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    color: white;
+    animation: slideIn 0.5s ease-out;
+}
+
+.flash-message.success {
+    background-color: rgba(46, 204, 113, 0.9);
+}
+
+.flash-message.error {
+    background-color: rgba(231, 76, 60, 0.9);
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-top: 0.25rem;
+}
+
+.general-application {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: white;
+}
+
+.general-apply-btn {
+    width: 100%;
+    max-width: 300px;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(45deg, #4169e1, #6e8be3);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.careers-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding: 1.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.info-card {
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(8px);
+    border-radius: 15px;
+    padding: 1.5rem;
+    color: white;
+}
+
+.info-card h4 {
+    margin-bottom: 1rem;
+    font-size: clamp(1.1rem, 1.5vw, 1.25rem);
+}
+
+.info-card ul {
+    padding-left: 1.5rem;
+}
+
+.loading {
+    display: none;
+    text-align: center;
+    padding: 20px;
+    color: white;
+}
+
+.loading:after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 2px solid #3498db;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+    .careers-section {
+        padding: 1rem;
+    }
+    
+    .flash-messages {
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+    
+    
+    .modal {
+        padding-top: 80px; /* Smaller padding on mobile */
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .job-actions {
+        flex-direction: column;
+    }
+    
+    .apply-btn, .share-btn, .general-apply-btn {
+        max-width: none;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .cancel-btn, .submit-btn {
+        max-width: none;
+    }
+}
+</style>
+{% endblock %}
+
+
+{% block content %}
+<section class="careers-section">
+    <div class="careers-header">
+        <h2>Career Opportunities</h2>
+        <p class="careers-intro">Join our dynamic team and be part of the digital revolution. We're always looking for talented individuals who are passionate about innovation and excellence.</p>
+    </div>
+
+    <div class="jobs-container">
+        {% for job in job_listings %}
+        <div class="job-card">
+            <h3>{{ job.title }}</h3>
+            <p class="job-description">{{ job.description }}</p>
+            
+            <div class="job-details">
+                <h4>Requirements:</h4>
+                <ul class="requirements-list">
+                    {% for requirement in job.requirements %}
+                    <li>{{ requirement }}</li>
+                    {% endfor %}
+                </ul>
+                
+                <div class="job-meta">
+                    <span class="location">
+                        <i class="location-icon"></i>
+                        {{ job.location }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="job-actions">
+                <button class="apply-btn" onclick="openApplicationForm('{{ job.title }}')">Apply Now</button>
+                <button class="share-btn" onclick="shareJob('{{ job.title }}')">Share Position</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Application Form Modal -->
+    <div id="applicationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeApplicationForm()">&times;</span>
+            <h3>Apply for <span id="jobTitle"></span></h3>
+        
+
+            <form id="applicationForm" class="application-form" method="POST" enctype="multipart/form-data" onsubmit="return validateForm(this)">
+                <input type="hidden" name="jobTitle" id="hiddenJobTitle">
+
+                <div class="form-group">
+                    <label for="fullName">Full Name:</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="experience">Years of Experience:</label>
+                    <input type="number" id="experience" name="experience" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="resume">Upload Resume (PDF only):</label>
+                    <input type="file" id="resume" name="resume" accept=".pdf" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="coverLetter">Cover Letter:</label>
+                    <textarea id="coverLetter" name="coverLetter" rows="5" required></textarea>
+                </div>
+
+               
+                <div class="checkbox-container">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms">I agree to share my information to Fourve Studio and Enterprises LLP</label>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" onclick="closeApplicationForm()">Cancel Application</button>
+                    <button type="submit" class="submit-btn">Submit Application</button>
+                </div>
+
+                <div class="loading" id="submitLoading">Submitting application...</div>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- General Application Section -->
+    <div class="general-application">
+        <h3>Don't see a position that matches your skills?</h3>
+        <p>We're always looking for talented individuals to join our team. Send us your resume and we'll keep it on file for future opportunities.</p>
+        <button class="general-apply-btn" onclick="openApplicationForm('General Application')">Submit General Application</button>
+    </div>
+
+    <!-- Additional Information Section -->
+    <div class="careers-info">
+        <div class="info-card">
+            <h4>Why Join Us?</h4>
+            <ul>
+                <li>Innovative work environment</li>
+                <li>Professional growth opportunities</li>
+                <li>Competitive compensation</li>
+                <li>Health insurance benefits</li>
+                <li>Work-life balance</li>
+            </ul>
+        </div>
+
+        <div class="info-card">
+            <h4>Our Culture</h4>
+            <p>At Fourve Studio, we believe in fostering a culture of innovation, collaboration, and continuous learning. Our team members are encouraged to think creatively and take initiative in their roles.</p>
+        </div>
+
+        <div class="info-card">
+            <h4>Growth Opportunities</h4>
+            <p>We invest in our employees' professional development through training programs, workshops, and mentorship opportunities. Join us to grow your career while working on exciting projects.</p>
+        </div>
+    </div>
+</section>
+
+
+<div class="flash-messages">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function openApplicationForm(jobTitle) {
+        document.getElementById('jobTitle').textContent = jobTitle;
+        document.getElementById('applicationModal').style.display = 'block';
+    }
+
+    function closeApplicationForm() {
+        document.getElementById('applicationModal').style.display = 'none';
+        document.getElementById('applicationForm').reset();
+    }
+
+    function shareJob(jobTitle) {
+        if (navigator.share) {
+            navigator.share({
+                title: 'Job Opening at Fourve Studio',
+                text: `Check out this job opening for ${jobTitle} at Fourve Studio!`,
+                url: window.location.href,
+            })
+            .catch((error) => console.log('Error sharing:', error));
+        }
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('applicationModal')) {
+            closeApplicationForm();
+        }
+    }
+
+
+    function validateForm(form) {
+        const loading = document.getElementById('submitLoading');
+        loading.style.display = 'block';
+
+        // Set the job title in hidden field
+        document.getElementById('hiddenJobTitle').value = 
+            document.getElementById('jobTitle').textContent;
+
+        clearErrors();
+        let isValid = true;
+
+        // Basic validation
+        if (!validateField('fullName', 'Please enter your full name')) isValid = false;
+        if (!validateEmail('email')) isValid = false;
+        if (!validatePhone('phone')) isValid = false;
+        if (!validateFile('resume')) isValid = false;
+        if (!validateField('coverLetter', 'Please enter a cover letter')) isValid = false;
+
+        if (!isValid) {
+            loading.style.display = 'none';
+            return false;
+        }
+        return true;
+    }
+
+    function validateField(fieldId, message) {
+        const field = document.getElementById(fieldId);
+        if (!field.value.trim()) {
+            showError(field, message);
+            return false;
+        }
+        return true;
+    }
+
+    function validateEmail(fieldId) {
+        const field = document.getElementById(fieldId);
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(field.value.trim())) {
+            showError(field, 'Please enter a valid email address');
+            return false;
+        }
+        return true;
+    }
+
+    function validatePhone(fieldId) {
+        const field = document.getElementById(fieldId);
+        const phoneRegex = /^\+?[\d\s-]{10,}$/;
+        if (!phoneRegex.test(field.value.trim())) {
+            showError(field, 'Please enter a valid phone number');
+            return false;
+        }
+        return true;
+    }
+
+    function validateFile(fieldId) {
+        const field = document.getElementById(fieldId);
+        if (!field.files || field.files.length === 0) {
+            showError(field, 'Please upload your resume');
+            return false;
+        }
+        const file = field.files[0];
+        const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+        if (!allowedTypes.includes(file.type)) {
+            showError(field, 'Please upload a PDF or Word document');
+            return false;
+        }
+        return true;
+    }
+
+    function showError(field, message) {
+        const error = document.createElement('div');
+        error.className = 'form-error';
+        error.textContent = message;
+        field.parentNode.appendChild(error);
+        field.classList.add('error');
+    }
+
+    function clearErrors() {
+        document.querySelectorAll('.form-error').forEach(error => error.remove());
+        document.querySelectorAll('.error').forEach(field => field.classList.remove('error'));
+    }
+
+    // Auto-hide flash messages after 5 seconds
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            document.querySelectorAll('.flash-message').forEach(function(message) {
+                message.style.opacity = '0';
+                setTimeout(() => message.remove(), 500);
+            });
+        }, 5000);
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const generalApplyBtn = document.querySelector('.general-apply-btn');
+        const applicationForm = document.querySelector('#applicationForm');
+
+        if (generalApplyBtn && applicationForm) {
+            generalApplyBtn.addEventListener('click', function() {
+                applicationForm.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                // Show form if hidden
+                applicationForm.style.display = 'block';
+            });
+        }
+    });
+</script>
+{% endblock %}

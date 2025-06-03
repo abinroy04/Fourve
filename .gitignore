@@ -1,0 +1,28 @@
+# Python bytecode files
+*.pyc
+*.pyo
+*.pyd
+__pycache__
+
+# Flask specific files
+instance/
+.venv/
+env/
+venv/
+
+# Virtual environment
+.env
+
+# Configuration files
+*.env
+*.config
+
+# IDEs and editors
+.vscode/
+.idea/
+
+# Windows specific files
+Thumbs.db
+
+# Flask cache and logs
+*.log

@@ -1,0 +1,407 @@
+{% extends "base.html" %}
+{% block title %}Fourve{% endblock %}
+
+{% block extra_head %}
+<meta name="description" content="Professional Live Streaming Services. Event Live and Broadcasting Team. Customized Solutions for Every Occasion. Advanced Technology and Seamless Integration.">
+<meta property="og:description" content="Professional Live Streaming Services. Event Live and Broadcasting Team. Customized Solutions for Every Occasion. Advanced Technology and Seamless Integration.">
+<meta name="keywords" content="Live Streaming, Broadcasting, Event Management, Digital Marketing, Media Production">
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .hero {
+        background: linear-gradient(rgb(65, 105, 225, 0.8), rgba(0, 0, 0, 0.8));
+        background-size: cover;
+        animation: fadeIn 1s ease-out;
+        background-position: center;
+        padding: 100px 0;
+        text-align: center;
+        color: white;
+    }
+    
+    .hero-content h1 {
+        background: var(--primary-color);
+        padding-top: 50px;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        font-weight: bold;
+        
+    }
+
+    .hero-content p {
+        animation: fadeIn 1s ease-out 0.5s;
+        animation-fill-mode: both;
+    }
+
+    .hero-content .cta-button {
+        animation: fadeIn 1s ease-out 1s;
+        animation-fill-mode: both;
+        background: linear-gradient(rgb(65, 105, 225, 0.8));
+        padding: 1rem 2rem;
+        border-radius: 30px;
+        text-decoration: none;
+        color: white;
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+
+    .hero-content .cta-button:hover {
+        box-shadow: 0 0 20px rgb(250, 250, 250);
+    }
+
+    .service-box {
+        background-color: #000000;
+        padding: 2rem;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .service-box:hover {
+        transform: translateY(-10px);
+        box-shadow: 
+            0 0 50px rgba(65, 105, 225),
+            inset 2px 2px 20px rgb(110, 139, 227);
+    }
+
+    .service-box img {
+        width: 100%;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+    }
+
+    .service-box h3 {
+        color: #ffffff;
+        margin-bottom: 1rem;
+    }
+
+    .service-box p {
+        color: #ffffff;
+        margin-bottom: 1.5rem;
+    }
+
+    .services-overview h2 {
+        text-align: center;
+        margin-bottom: 1rem;
+        animation: fadeIn 1s ease-out 1.5s;
+        animation-fill-mode: both;
+    }
+
+    .service-box {
+        background-color: #000000;
+        padding: 2rem;
+        border-radius: 10px;
+        transition: all 0.2s ease;
+        opacity: 0;
+        transform: translateY(100px);
+    }
+
+    .service-box.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .learn-more {
+        display: inline-block;
+        padding: 0.8rem 1.5rem;
+        background: linear-gradient(45deg, rgb(65, 105, 225), rgb(110, 139, 227));
+        color: white;
+        text-decoration: none;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        margin-top: 1rem;
+    }
+
+    .learn-more:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0 15px rgba(65, 105, 225, 0.5);
+        background: linear-gradient(45deg, rgb(110, 139, 227), rgb(65, 105, 225));
+    }
+    /* Portfolio Section */
+    .portfolio-section {
+        padding: 4rem 2rem;
+        background: rgba(0, 0, 0, 0.8);
+    }
+
+    .portfolio-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .portfolio-category {
+        margin-bottom: 3rem;
+    }
+
+    .portfolio-category h3 {
+        color: white;
+        margin-bottom: 1.5rem;
+        font-size: 1.8rem;
+    }
+
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+    }
+
+    .video-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+    }
+
+    .section-title {
+        text-align: center;
+        color: white;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+    }
+
+
+    /*Video Container*/
+    .portfolio-category {
+        max-width: 800px;
+        margin: 0 auto 3rem auto;
+    }
+
+    .video-container{
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+        margin: 0 auto;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        box-shadow: 0 4px 30px rgba(247, 239, 239, 0.303);
+    }
+
+    /* Live Stream Video */
+    .portfolio-category:first-child .video-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    /* Grid Videos */
+    .video-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .video-grid .video-container {
+        position: relative;
+        padding-bottom: 100%;
+        height: 0;
+        width: 100%;
+    }
+
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+    }
+    .down-arrow {
+        display: block;
+        text-align: center;
+        margin-bottom: 2rem;
+        opacity: 0;
+        animation: fadeIn 2s ease-out forwards 2s, bounce 2s infinite 3s;
+        animation-fill-mode: both;
+    }
+
+    .down-arrow img {
+        width: 50px;
+        height: auto;
+    }
+
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {
+            transform: translateY(0);
+        }
+        40% {
+            transform: translateY(-15px);
+        }
+        60% {
+            transform: translateY(-7px);
+        }
+    }
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Fourve Studios and Enterprises</h1>
+        <p>Transforming ideas into digital excellence</p>
+        <a href="{{ url_for('contact') }}" class="cta-button">Get Started</a>
+    </div>
+</section>
+
+<section class="services-overview">
+    <h2 style="text-align: center; margin-bottom: 1rem;">Our Services</h2>
+    <div class="down-arrow">
+        <img src="{{ url_for('static', filename='images/down-arrow.png') }}" alt="Scroll Down">
+    </div>
+    <div class="services-grid">
+        <div class="service-box">
+            <img src="{{ url_for('static', filename='images/live.jpg') }}" alt="Live Streaming">
+            <h3>Live Streaming</h3>
+            <p>Broadcasting services for your important events.</p>
+            <a href="{{ url_for('broadcasting') }}#live-streaming" class="learn-more">Learn More</a>
+        </div>
+        <div class="service-box">
+            <img src="{{ url_for('static', filename='images/media.jpg') }}" alt="Media Production">
+            <h3>Media Production</h3>
+            <p>High-quality videography and photography services.</p>
+            <a href="{{ url_for('mediapro') }}#media-production" class="learn-more">Learn More</a>
+        </div>
+        <div class="service-box">
+            <img src="{{ url_for('static', filename='images/digital.jpg') }}" alt="Digital Marketing">
+            <h3>Digital Marketing</h3>
+            <p>Comprehensive digital marketing solutions.</p>
+            <a href="{{ url_for('digimark') }}#digital-marketing" class="learn-more">Learn More</a>
+        </div>
+        <div class="service-box">
+            <img src="{{ url_for('static', filename='images/event.jpg') }}" alt="Event Management">
+            <h3>Event Management</h3>
+            <p>End-to-end event planning and execution.</p>
+            <a href="{{ url_for('eventmgmt') }}#event-management" class="learn-more">Learn More</a>
+        </div>
+    </div>
+</section>
+<section class="portfolio-section fade-in">
+    <h2 class="section-title">Our Portfolio</h2>
+    
+    <div class="portfolio-container">
+        <div class="portfolio-category">
+            <h3>Live Streamed Content</h3>
+            <div class="video-container">
+                <iframe width="560" height="315" 
+                    src="https://www.youtube.com/embed/iOgc_cjoILk" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+
+        <div class="portfolio-category">
+            <h3>Videography Content</h3>
+            <div class="video-grid">
+                <div class="video-container">
+                    <iframe src="https://www.instagram.com/reel/C_YYqc-SeI8/embed" 
+                        frameborder="0" 
+                        scrolling="no" 
+                        allowtransparency="true">
+                    </iframe>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.instagram.com/reel/C6y0NHYSLVQ/embed" 
+                        frameborder="0" 
+                        scrolling="no" 
+                        allowtransparency="true">
+                    </iframe>
+                </div>
+                <div class="video-container">
+                    <iframe width="560" height="315" 
+                        src="https://www.youtube.com/embed/YCQVhdto_ms" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.instagram.com/reel/DCEF8F0ygw0/embed" 
+                        frameborder="0" 
+                        scrolling="no" 
+                        allowtransparency="true">
+                    </iframe>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.instagram.com/reel/DBYHgUMpjW0/embed" 
+                        frameborder="0" 
+                        scrolling="no" 
+                        allowtransparency="true">
+                    </iframe>
+                </div>
+            
+                <div class="video-container">
+                    <iframe src="https://www.instagram.com/reel/DBmJdhrhwLb/embed" 
+                        frameborder="0" 
+                        scrolling="no" 
+                        allowtransparency="true">
+                    </iframe>
+                </div>
+            
+                <div class="video-container">
+                    <iframe src="https://www.instagram.com/reel/DCBC_eaBeAv/embed" 
+                        frameborder="0" 
+                        scrolling="no" 
+                        allowtransparency="true">
+                    </iframe>
+                </div>
+            
+                <div class="video-container">
+                    <iframe src="https://www.instagram.com/reel/DCL0WEsJ-RY/embed" 
+                        frameborder="0" 
+                        scrolling="no" 
+                        allowtransparency="true">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    document.querySelectorAll('.service-box').forEach((box) => {
+        observer.observe(box);
+    });
+
+</script>
+{% endblock %}

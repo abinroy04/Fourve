@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}Fourve - Digital Marketing{% endblock %}
+
+{% block extra_css %}
+<style>
+    .marketing-hero {
+        background: linear-gradient(rgb(75, 0, 130, 0.8), rgba(0, 0, 0, 0.8));
+        background-size: cover;
+        background-position: center;
+        padding: 100px 0;
+        text-align: center;
+        color: white;
+        animation: fadeIn 1s ease-out;
+    }
+
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        padding: 2rem;
+        animation: fadeIn 1s ease-out 0.5s;
+        animation-fill-mode: both;
+    }
+
+    .service-card {
+        background: #383939;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+        color: white;
+    }
+
+    .service-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .why-us {
+        background: #1a1a1a;
+        color: white;
+        padding: 4rem 2rem;
+        margin: 2rem 0;
+        animation: fadeIn 1s ease-out 1s;
+        animation-fill-mode: both;
+    }
+
+    .cta-section {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: #2e2f2f;
+        color: white;
+        animation: fadeIn 1s ease-out 1.5s;
+        animation-fill-mode: both;
+    }
+
+    .cta-button {
+        display: inline-block;
+        padding: 1rem 2rem;
+        background: #6a0dad;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background 0.3s ease;
+    }
+
+    .cta-button:hover {
+        background: #4b0082;
+    }
+
+    .lead {
+        color: white;
+        font-size: 1.2rem;
+        line-height: 1.6;
+        margin: 2rem 0;
+    }
+
+    h3 {
+        color: white;
+        margin-bottom: 1.5rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="marketing-hero">
+    <h1>Fourve Digital</h1>
+    <h2>Strategic Digital Marketing for Modern Businesses</h2>
+</div>
+
+<section class="content-section">
+    <div class="container">
+        <p class="lead">Our digital marketing services are designed to help your business thrive in the online world. We focus on boosting visibility, driving engagement, and generating leads with creative and strategic approaches.</p>
+        
+        <h3>Our Digital Marketing Services</h3>
+        <div class="services-grid">
+            <div class="service-card">
+                <h4>Social Media Management</h4>
+                <p>Strategic content planning and community engagement</p>
+            </div>
+            <div class="service-card">
+                <h4>Search Engine Optimization</h4>
+                <p>Improve your website's visibility in search results</p>
+            </div>
+            <div class="service-card">
+                <h4>Content Marketing</h4>
+                <p>Engaging content that converts visitors into customers</p>
+            </div>
+            <div class="service-card">
+                <h4>PPC Campaigns</h4>
+                <p>Targeted advertising campaigns that deliver results</p>
+            </div>
+            <div class="service-card">
+                <h4>Email Marketing</h4>
+                <p>Personalized email campaigns that nurture leads</p>
+            </div>
+        </div>
+
+        <div class="why-us">
+            <h3>Why Choose Us</h3>
+            <ul>
+                <li>Customized marketing strategies</li>
+                <li>Detailed analytics and reporting</li>
+                <li>A team of creative and technical experts</li>
+            </ul>
+        </div>
+
+        <div class="cta-section">
+            <h3>Boost Your Online Presence</h3>
+            <p>Ready to take your digital marketing to the next level?</p>
+            <a href="{{ url_for('contact') }}" class="cta-button">Get Started</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

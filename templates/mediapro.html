@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Fourve - Media Production{% endblock %}
+
+{% block extra_css %}
+<style>
+    html, body {
+        overflow-x: hidden;
+        width: 100%;
+        position: relative;
+    }
+
+    .container {
+        animation: fadeIn 1s ease-out;
+        overflow: hidden;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .mediapro-hero {
+        background: linear-gradient(rgba(139, 0, 0, 0.8), rgba(0, 0, 0, 0.8));
+        background-size: cover;
+        background-position: center;
+        padding: 100px 0;
+        text-align: center;
+        color: white;
+        animation: fadeIn 1s ease-out;
+    }
+
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        padding: 2rem;
+        animation: fadeIn 1s ease-out 0.5s;
+        animation-fill-mode: both;
+    }
+    
+    .service-card:hover {
+        transform: translateY(-5px);
+    }
+    /* ...existing grid and card styles from broadcasting.html... */
+
+    .service-card {
+        background: #383939;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+        color: white;
+    }
+
+    .cta-button {
+        display: inline-block;
+        padding: 1rem 2rem;
+        background: #dc143c;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background 0.3s ease;
+    }
+
+    .cta-button:hover {
+        background: #b01030;
+    }
+
+    .lead {
+        color: white;
+        font-size: 1.2rem;
+        line-height: 1.6;
+        margin: 2rem 0;
+    }
+
+    .why-us {
+        background: #1a1a1a;
+        color: rgb(255, 255, 255);
+        padding: 4rem 2rem;
+        margin: 2rem 0;
+        animation: fadeIn 1s ease-out 1s;
+        animation-fill-mode: both;
+    }
+
+    .cta-section {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: #2e2f2f;
+        animation: fadeIn 1s ease-out 1.5s;
+        animation-fill-mode: both;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="mediapro-hero">
+    <h1>Fourve Dimension</h1>
+    <h3>Visual Storytelling at Its Best</h3>
+</div>
+
+<section class="content-section">
+    <div class="container">
+        <p class="lead">We bring your vision to life with stunning visuals and engaging narratives. From conceptualization to post-production, our team ensures every frame speaks volumes.</p>
+        
+        <h3>Our Media Production Services</h3>
+        <div class="services-grid">
+            <div class="service-card">
+                <h4>Video Production</h4>
+                <p>Corporate videos, advertisements, and short films</p>
+            </div>
+            <div class="service-card">
+                <h4>Photography</h4>
+                <p>Event, product, and portrait photography</p>
+            </div>
+            <div class="service-card">
+                <h4>Post-Production</h4>
+                <p>Professional editing and color grading</p>
+            </div>
+            <div class="service-card">
+                <h4>Wedding Films</h4>
+                <p>Cinematic wedding videography</p>
+            </div>
+        </div>
+
+        <div class="why-us">
+            <h3>Why Choose Us</h3>
+            <ul>
+                <li>Creative storytelling</li>
+                <li>Cutting-edge technology</li>
+                <li>Exceptional attention to detail</li>
+                <li>Offer various screen resolutions without charging extra</li>
+            </ul>
+        </div>
+
+        <div class="cta-section">
+            <h3>Let's Create Something Incredible</h3>
+            <p>Ready to bring your vision to life?</p>
+            <a href="{{ url_for('contact') }}" class="cta-button">Contact Us</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
